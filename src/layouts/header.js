@@ -1,4 +1,4 @@
-import UserTop from '@/components/user';
+import UserTop from '@/components/UserTop';
 import PropTypes from 'prop-types';
 import { Layout, Icon } from 'antd';
 import styles from'./header.less';

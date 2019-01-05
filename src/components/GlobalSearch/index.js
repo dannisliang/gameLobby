@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Input, Icon, AutoComplete } from 'antd';
 import classNames from 'classnames';
 import styles from './index.less';
-
+// 用户工具栏搜索框
 export default class HeaderSearch extends PureComponent {
     static propTypes = {
         className: PropTypes.string,
@@ -12,7 +12,7 @@ export default class HeaderSearch extends PureComponent {
         onPressEnter: PropTypes.func,
         defaultActiveFirstOption: PropTypes.bool,
         dataSource: PropTypes.array,
-        defaultOpen: PropTypes.bool,
+        defaultOpen: PropTypes.bool,//暂时用不到
         onVisibleChange: PropTypes.func,
     };
 

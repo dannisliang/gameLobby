@@ -18,12 +18,13 @@ export default class SiderDemo extends React.PureComponent {
 		const minHeight=window.screen.availHeight 
 		return (
 			<Layout>
-
+				{/* 侧边栏 */}
 				<SideMenu collapsed={this.state.collapsed} />
 
 				<Layout>
+					{/* 用户工具栏 */}
 					<HeaderUser collapsed={this.state.collapsed} toggle={this.toggle} />
-
+					{/* 内容 */}
 					<Content
 						style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: minHeight*0.78, }}>
 						Content

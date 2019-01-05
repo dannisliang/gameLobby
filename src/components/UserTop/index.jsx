@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Layout, Button, Icon } from 'antd';
 import HeaderSearch from '@/components/GlobalSearch';
 import styles from './user.less';
-const { Header } = Layout;
+// 用户工具栏的右边，头像
 function UserTop(props) {
     return (
         <div className={styles.user}>
@@ -16,6 +16,9 @@ function UserTop(props) {
                 onPressEnter={(value) => {
                     console.log('enter', value); // eslint-disable-line
                 }} />
+            <span>
+                
+            </span>
         </div>
     )
 }

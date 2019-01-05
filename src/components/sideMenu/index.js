@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Menu, Icon, Button, Layout } from 'antd';
 import PropTypes from 'prop-types';
 const SubMenu = Menu.SubMenu;
-
+// 侧边栏
 class SideMenu extends PureComponent {
     static propTypes = {
 		collapsed:PropTypes.bool,	
@@ -20,7 +20,6 @@ class SideMenu extends PureComponent {
 					mode="inline"
 					defaultSelectedKeys={['1']}
 				// defaultOpenKeys={['sub1']}
-				// inlineCollapsed={false}
 				>
 					<SubMenu key="sub1" title={<><Icon type="mail" /><span>棋牌游戏</span></>}>
 						<Menu.Item key="5">桥牌</Menu.Item>
