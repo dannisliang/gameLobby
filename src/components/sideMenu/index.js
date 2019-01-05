@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Menu, Icon, Button, Layout } from 'antd';
-
+import PropTypes from 'prop-types';
 const SubMenu = Menu.SubMenu;
 
 class SideMenu extends PureComponent {
+    static propTypes = {
+		collapsed:PropTypes.bool,	
+	}
+
 	render() {
 		return (
 			<Layout.Sider
@@ -24,18 +28,18 @@ class SideMenu extends PureComponent {
 						<Menu.Item key="7">麻将</Menu.Item>
 						<Menu.Item key="8">飞行棋</Menu.Item>
 					</SubMenu>
-					<SubMenu key="sub2" title={<><Icon type="appstore" /><span>养成游戏</span></>}>
+					<SubMenu key="sub2" title={<><Icon type="appstore" /><span>角色扮演</span></>}>
 						<Menu.Item key="9">剑灵</Menu.Item>
 						<Menu.Item key="10">天涯明月刀</Menu.Item>
 						<SubMenu key="sub3" title="Submenu">
-							<Menu.Item key="11">Option 11</Menu.Item>
-							<Menu.Item key="12">Option 12</Menu.Item>
+							<Menu.Item key="111">Option 11</Menu.Item>
+							<Menu.Item key="121">Option 12</Menu.Item>
 						</SubMenu>
 					</SubMenu>
 					<SubMenu key="sub4" title={<><Icon type="pie-chart" /><span>竞技游戏</span></>}>
-						<Menu.Item key="5">守望先锋</Menu.Item>
-						<Menu.Item key="6">英雄联盟</Menu.Item>
-						<Menu.Item key="7">星际争霸</Menu.Item>
+						<Menu.Item key="12">守望先锋</Menu.Item>
+						<Menu.Item key="13">英雄联盟</Menu.Item>
+						<Menu.Item key="14">星际争霸</Menu.Item>
 					</SubMenu>
 					<Menu.Item key="2">
 						<Icon type="desktop" />
