@@ -5,7 +5,7 @@ import TableCard from '@/components/TableCard';
 import router from 'umi/router';
 import { Card, Row, Col } from 'antd';
 import styles from './index.less';
-class Test extends PureComponent {
+class GameList extends PureComponent {
     getData = () => {
         const dataSource = new Array(12).fill(7)
         return dataSource
@@ -22,9 +22,9 @@ class Test extends PureComponent {
 
             <div className="gutter-example">
                 <Row gutter={16} type="flex" justify={"center"}>
-                    {dataSource.map((item) => {
+                    {dataSource.map((item,index) => {
                         return (
-                            <Col className={styles.gutterRow} xs={24} sm={12} md={8} xl={6} onClick={this.aaa}>
+                            <Col key={index} className={styles.gutterRow} xs={24} sm={12} md={8} xl={6} onClick={this.aaa}>
                                 <Card title="Card title">
                                     <TableCard tableList={tableList} size={45} scale={0.07} />
                                 </Card>
@@ -40,4 +40,4 @@ class Test extends PureComponent {
     }
 }
 
-export default Test
+export default GameList

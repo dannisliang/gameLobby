@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import router from 'umi/router';
 import { Card, Row, Col } from 'antd';
 import styles from './index.less';
-class Test extends PureComponent {
+class Bridge extends PureComponent {
     aaa = () => {
         router.push({
-            pathname:'/bridge/gameList',
+            pathname:'/chesscard/bridge/gameList',
         })
     }
     getData=()=>{
@@ -19,9 +19,9 @@ class Test extends PureComponent {
         
                 <div className="gutter-example">
                     <Row gutter={16}>
-                        {dataSource.map((item) => {
+                        {dataSource.map((item,index) => {
                             return (
-                                <Col className={styles.gutterRow} xs={24} sm={24} md={4} lg={4} xl={4} onClick={this.aaa}>
+                                <Col key={index*index} className={styles.gutterRow} xs={24} sm={24} md={4} lg={4} xl={4} onClick={this.aaa}>
                                     <Card title="Card title">赛事列表</Card>
                                 </Col>
                             )
@@ -35,4 +35,4 @@ class Test extends PureComponent {
     }
 }
 
-export default Test
+export default Bridge

@@ -11,7 +11,7 @@ class CardList extends PureComponent {
 				<Row gutter={16}>
 					{dataSource.map((item) => {
 						return (
-							<Col className={styles.gutterRow} xs={12} sm={8} md={4} lg={4} xl={4} onClick={clickHandle.bind(this)}>
+							<Col key={item} className={styles.gutterRow} xs={12} sm={8} md={4} lg={4} xl={4} onClick={clickHandle.bind(this)}>
 								<Card title="Card title">{children}</Card>
 							</Col>
 						)
