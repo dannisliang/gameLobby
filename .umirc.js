@@ -14,6 +14,7 @@ export default {
         exclude: [
           /components/,
           /assets/,
+          /odoo/,
         ],
       },
     }],
