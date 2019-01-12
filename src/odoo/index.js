@@ -8,7 +8,12 @@ const db = 'TT'
 const { crm, project, product, analytic, account } = Odoo.addons;
 const modules = { zog_igame };
 const models = {
-    'res.users':['name','login'],
+    'res.users': [
+        "team_player_ids",
+        "todo_table_ids",
+        "done_table_ids",
+        "doing_table_ids",
+    ],
     'og.game': ["name", "date_from", "date_thru", "phase_ids", "round_ids", "schedule_ids", "deal_ids", "team_ids", "player_ids", "match_ids", "table_ids", "board_ids"],
     'og.phase': ["name", "number", "sequence", "game_id", "org_type", "score_type", "score_uom", "round_ids", "team_ids"],
     'og.schedule': ["name", "number", "date_from", "date_thru", "deal_ids", "round_ids"],

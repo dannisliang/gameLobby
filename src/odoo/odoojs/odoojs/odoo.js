@@ -228,6 +228,7 @@ class Odoo {
     async user(fields) {
         // get login user
         const uid = this._rpc.uid
+        console.log(uid);
         return this.env('res.users').browse(uid,fields)
     }
 

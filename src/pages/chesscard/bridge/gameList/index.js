@@ -22,8 +22,17 @@ class GameList extends PureComponent {
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,]]
         const count = await cls.search_count(domain)
-        console.log(count);
-        await this.setState({ total: count })
+        
+        const fields ={
+            "team_player_ids": null,
+            "todo_table_ids": null,
+            "done_table_ids": null,
+            "doing_table_ids": null,
+        }
+        const clss =await Odoo.user(fields);
+        const ddd=clss.look(fields)
+        console.log(ddd);
+        await this.setState({  total: count })
     }
     getData = async (page = 1, pageSize = 8) => {
         this.setState({ loading: true })
