@@ -8,13 +8,6 @@ class BaseLayout extends React.PureComponent {
     state = {
         collapsed: false,
     };
-    componentWillMount() {
-        const { location: { pathname } } = this.props;
-        if (pathname === '/') {
-            router.push('/login')
-        }
-
-    }
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -22,7 +15,6 @@ class BaseLayout extends React.PureComponent {
     }
 
     render() {
-        console.log(this.props);
         const { isMobile, location: { pathname } } = this.props
         const minHeight = window.screen.availHeight
         return (
@@ -43,4 +35,4 @@ class BaseLayout extends React.PureComponent {
         );
     }
 }
-export default  BaseLayout
+export default BaseLayout

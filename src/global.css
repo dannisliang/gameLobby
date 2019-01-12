@@ -16,3 +16,6 @@ body {
 .ant-card{
   border-radius: 4% !important
 }
+.ant-pagination {
+    text-align: center !important;
+}

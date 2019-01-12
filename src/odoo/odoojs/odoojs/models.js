@@ -173,7 +173,7 @@ const modelCreator = options => {
   cls.init = async () => {
     // run only one  time. to set cls._fields for this cls
 
-    console.log( 'init:', cls._name, cls._fields_raw, cls._fields )
+
 
     if (cls._fields) {
       return cls.env(cls._name);
@@ -182,6 +182,7 @@ const modelCreator = options => {
     if (_fields && Object.keys(_fields).length > 0) {
       cls._fields = _fields;
     }
+    console.log( 'init:', cls._name, cls._fields_raw, cls._fields )
     return cls.env(cls._name);
   };
 
@@ -228,7 +229,9 @@ const modelCreator = options => {
 
   cls._get_fields2 = async fields0 => {
     const fields = fields0 || {};
+
     await cls.init();
+    console.log(cls._fields);
     return Object.keys(cls._fields).reduce(async (accPromise, cur) => {
       const acc = await accPromise;
       const { type, relation } = cls._fields[cur];

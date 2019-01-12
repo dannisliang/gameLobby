@@ -51,7 +51,8 @@ class Odoo {
         //console.log('parant odoo',options)
 
         const { host, db, modules, models } = options
-        const rpc = new RPC({ host,db })
+        const sid=localStorage.getItem('sid')
+        const rpc = new RPC({ host,db,sid })
         this._rpc = rpc
         this._models = models||{}
 
@@ -59,8 +60,6 @@ class Odoo {
         this._modules = {}
         const {base} = addons
         const modules2 = { base, ...modules}
-
-        console.log( modules2 )
 
         for( const module_name in modules2 ) {
             const module = modules2[module_name]
@@ -85,7 +84,7 @@ class Odoo {
             this._fn_one_model(model_name, model)
         }
 
-
+        console.log(module);
         this._modules[module_name] =  module
     }
 
@@ -93,14 +92,13 @@ class Odoo {
         // if no config this model,
         // then this model is never used
         if( ! this._models[model_name] ){
-            
+            console.log(model_name);
             return
         }
 
         // if config this model fields  ,
         // then only use this fields
         // else use all fields
-
         let cls = this._env[model_name]
         if(cls){
             const fields0 = this._models[model_name]
@@ -201,10 +199,10 @@ class Odoo {
     }
 
     async login(params){
-        const data = await this._rpc.login(params )
+        const data = await this._rpc.login(params)
         if(!data.code){
             Odoo._session[this._rpc.sid] = this
-            //await this.init()
+            // await this.init()
             return this._rpc.sid
         }
         return null

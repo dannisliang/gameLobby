@@ -1,28 +1,49 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import router from 'umi/router';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Spin } from 'antd';
 import styles from './index.less';
+import Odoo from '@/odoo';
+import { async } from 'q';
 class Bridge extends PureComponent {
-    aaa = () => {
+    state = {
+        dataSource: [],
+        loading:true
+    }
+    aaa = (data) => {   
+        console.log(data);    
         router.push({
-            pathname:'/chesscard/bridge/gameList',
+            pathname: '/chesscard/bridge/gameList',
+            state:{
+                game_id:data.id
+            }
         })
     }
-    getData=()=>{
-        const dataSource=new Array(12).fill(7)
-        return dataSource
+    componentDidMount() {
+        this.getData()
+    }
+    getData = async () => {
+        console.log(Odoo._rpc.sid);
+        const game = Odoo.env('og.game');
+        const fields = {
+            name: null
+        }
+        const damain = [['id', '>=', '0']]
+        const dataSource = await game.search_read(damain, fields);
+        console.log(dataSource);
+        this.setState({ dataSource: dataSource,loading:false })
     }
     render() {
-        const dataSource =this.getData();
+        const { dataSource ,loading} = this.state
         return (
-        
-                <div className="gutter-example">
+            <Spin spinning={loading} >
+                <div className="gutter-example" style={{width:'100%',height:'100%'}}>
                     <Row gutter={16}>
-                        {dataSource.map((item,index) => {
+                        {dataSource.map((item, index) => {
+                            console.log(item);
                             return (
-                                <Col key={index*index} className={styles.gutterRow} xs={24} sm={24} md={4} lg={4} xl={4} onClick={this.aaa}>
-                                    <Card title="Card title">赛事列表</Card>
+                                <Col key={item.name} className={styles.gutterRow} xs={24} sm={24} md={4} lg={4} xl={4} onClick={this.aaa.bind(this,item)}>
+                                    <Card title={item.id}>{item.name}</Card>
                                 </Col>
                             )
                         })
@@ -30,7 +51,7 @@ class Bridge extends PureComponent {
                         }
                     </Row>
                 </div>
-
+            </Spin>
         )
     }
 }

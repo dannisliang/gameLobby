@@ -2,7 +2,7 @@ import React from 'react'
 import index from './index.css'
 import play from '@/assets/player.svg'
 const Table = (props) => {
-    const { user, size, scale, margin } = props;
+    const {  size, scale, margin } = props;
     return (
         <div className={index.flexColumn}  >
 
