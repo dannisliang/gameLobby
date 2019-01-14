@@ -14,25 +14,25 @@ class GameList extends PureComponent {
         total: 0
     }
     componentDidMount() {
-        this.getTotal()
-        this.getData()
+            this.getTotal()
+            this.getData()
     }
     getTotal = async () => {
         const { location: { state: { game_id } } } = this.props
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,]]
         const count = await cls.search_count(domain)
-        
-        const fields ={
+
+        const fields = {
             "team_player_ids": null,
             "todo_table_ids": null,
             "done_table_ids": null,
             "doing_table_ids": null,
         }
-        const clss =await Odoo.user(fields);
-        const ddd=clss.look(fields)
+        const clss = await Odoo.user(fields);
+        const ddd = clss.look(fields);
         console.log(ddd);
-        await this.setState({  total: count })
+        await this.setState({ total: count })
     }
     getData = async (page = 1, pageSize = 8) => {
         this.setState({ loading: true })
@@ -59,6 +59,8 @@ class GameList extends PureComponent {
     }
     render() {
         const { dataSource, loading, total } = this.state;
+        // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
+        const url='/igame/#/game/1'
         console.log(dataSource);
         return (
             <div className="gutter-example">
@@ -68,7 +70,9 @@ class GameList extends PureComponent {
                             return (
 
                                 <Col key={index} className={styles.gutterRow} xs={24} sm={12} md={8} xl={6} onClick={this.aaa}>
-                                    <Card title={item.round_id.name + item.number}>
+                                    <Card
+                                        title={item.round_id.name + item.number}
+                                        extra={<a target="_blank" href={url}>进入游戏</a>}>
                                         <TableCard table={item} size={30} scale={0.1} />
                                     </Card>
                                 </Col>

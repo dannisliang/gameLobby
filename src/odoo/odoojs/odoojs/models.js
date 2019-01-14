@@ -167,7 +167,7 @@ const modelCreator = options => {
   cls._rpc = rpc;
   cls._env = env;
   cls._records = {};
-  cls._fields = null;
+  cls._fields = {};
   cls._fields_raw = fields_raw || ['name'];
 
   cls.init = async () => {
@@ -175,7 +175,7 @@ const modelCreator = options => {
 
 
 
-    if (cls._fields) {
+    if (cls._fields&& Object.keys(cls._fields).length !== 0) {
       return cls.env(cls._name);
     }
     const _fields = await cls.fields_get(cls._fields_raw, ['type', 'relation']);

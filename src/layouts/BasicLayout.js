@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import SideMenu from '@/components/sideMenu';
 import HeaderUser from './header';
 import router from 'umi/router';
+import ErrorBoundary from '@/components/ErrorBoundary';
 const { Content } = Layout;
 class BaseLayout extends React.PureComponent {
     state = {
@@ -25,9 +26,12 @@ class BaseLayout extends React.PureComponent {
                     {/* 用户工具栏 */}
                     <HeaderUser collapsed={this.state.collapsed} toggle={this.toggle} {...this.props} />
                     {/* 内容 */}
+
                     <Content
                         style={{ margin: '24px 16px', padding: 24, minHeight: minHeight * 0.78, }}>
-                        {this.props.children}
+                        <ErrorBoundary errorMessage={'数据获取失败'}>
+                            {this.props.children}
+                        </ErrorBoundary>
                     </Content>
                 </Layout>
 

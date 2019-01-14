@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva'
-import { Layout, Button, Icon } from 'antd';
+import { Layout, Button, Icon ,Avatar} from 'antd';
 import HeaderSearch from '@/components/GlobalSearch';
 import styles from './user.less';
 import router from 'umi/router'
@@ -25,10 +25,14 @@ class UserTop extends PureComponent {
                     onPressEnter={(value) => {
                         console.log('enter', value); // eslint-disable-line
                     }} />
+                
                 <div>
                     <Button className={styles.flexItem} onClick={this.logout}>
                         退出登陆
-                </Button>
+                    </Button>
+                </div>
+                <div className={styles.flexItem}>
+                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 </div>
             </div>
         )

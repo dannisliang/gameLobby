@@ -19,4 +19,5 @@ export default {
       },
     }],
   ],
+  base:'/itable'
 }

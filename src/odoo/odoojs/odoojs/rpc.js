@@ -106,7 +106,7 @@ class RPC {
     this.db = db;
     this.timeout = timeout;
     this.sid = sid;
-    this.uid = null;
+    this.uid = uid;
     this.callbackerror = callbackerror || this._callbackerror;
   }
 
