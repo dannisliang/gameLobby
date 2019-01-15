@@ -62,6 +62,7 @@ class GameList extends PureComponent {
 
         // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
         const url = '/igame/#/game/1'
+        // const url='https://www.baidu.com/'
         console.log(dataSource);
         return (
             <Spin spinning={loading}>
@@ -69,7 +70,7 @@ class GameList extends PureComponent {
                     dataSource={dataSource}
                     size={30}
                     scale={0.1}
-
+                    url={url}
                 />
                 <Pagination
                     pageSize={8}
