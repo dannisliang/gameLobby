@@ -1,12 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CardList from '@/components/CardList';
 import TableCard from '@/components/TableCard';
 import router from 'umi/router';
-import {Pagination, Spin } from 'antd';
-// import styles from './index.less';
+import { Pagination, Spin } from 'antd';
 import Odoo from '@/odoo'
-import { async } from 'q';
 class GameList extends PureComponent {
     state = {
         dataSource: [],
@@ -14,11 +11,16 @@ class GameList extends PureComponent {
         total: 0
     }
     componentDidMount() {
-        this.getTotal()
-        this.getData()
+        const { location: { state } } = this.props
+        if (!state) {
+            console.log(state);
+            router.replace('/chesscard/bridge')
+        } else {
+            this.getTotal(state.game_id)
+            this.getData(state.game_id)
+        }
     }
-    getTotal = async () => {
-        const { location: { state: { game_id } } } = this.props
+    getTotal = async (game_id) => {
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,]]
         const count = await cls.search_count(domain)
@@ -34,9 +36,8 @@ class GameList extends PureComponent {
         console.log(ddd);
         await this.setState({ total: count })
     }
-    getData = async (page = 1, pageSize = 8) => {
+    getData = async (game_id, page = 1, pageSize = 8) => {
         this.setState({ loading: true })
-        const { location: { state: { game_id } } } = this.props
         console.log(game_id);
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,]]
@@ -61,8 +62,8 @@ class GameList extends PureComponent {
         const { dataSource, loading, total } = this.state;
 
         // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
-        const url = '/igame/#/game/1'
-        // const url='https://www.baidu.com/'
+        // const url = '/igame/#/game/1'
+        const url = 'https://www.baidu.com/'
         console.log(dataSource);
         return (
             <Spin spinning={loading}>
