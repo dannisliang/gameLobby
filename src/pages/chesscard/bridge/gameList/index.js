@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import CardList from '@/components/CardList';
 import TableCard from '@/components/TableCard';
 import router from 'umi/router';
-import { Card, Row, Col, Pagination, Spin } from 'antd';
-import styles from './index.less';
+import {Pagination, Spin } from 'antd';
+// import styles from './index.less';
 import Odoo from '@/odoo'
 import { async } from 'q';
 class GameList extends PureComponent {
@@ -14,8 +14,8 @@ class GameList extends PureComponent {
         total: 0
     }
     componentDidMount() {
-            this.getTotal()
-            this.getData()
+        this.getTotal()
+        this.getData()
     }
     getTotal = async () => {
         const { location: { state: { game_id } } } = this.props
@@ -59,34 +59,24 @@ class GameList extends PureComponent {
     }
     render() {
         const { dataSource, loading, total } = this.state;
-        
+
         // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
-        const url='/igame/#/game/1'
+        const url = '/igame/#/game/1'
         console.log(dataSource);
         return (
-            <div className="gutter-example">
-                <Spin spinning={loading}>
-                    <Row gutter={16} type="flex" justify={"center"}>
-                        {dataSource.map((item, index) => {
-                            return (
+            <Spin spinning={loading}>
+                <TableCard
+                    dataSource={dataSource}
+                    size={30}
+                    scale={0.1}
 
-                                <Col key={index} className={styles.gutterRow} xs={24} sm={12} md={8} xl={6} onClick={this.aaa}>
-                                    <Card
-                                        title={item.round_id.name + item.number}
-                                        extra={<a target="_blank" href={url}>进入游戏</a>}>
-                                        <TableCard table={item} size={30} scale={0.1} />
-                                    </Card>
-                                </Col>
-                            )
-                        })
-                        }
-                    </Row>
-                    <Pagination
-                        pageSize={8}
-                        onChange={this.getData}
-                        total={total} />
-                </Spin>
-            </div>
+                />
+                <Pagination
+                    pageSize={8}
+                    onChange={this.getData}
+                    total={total}
+                    url={url} />
+            </Spin>
         )
     }
 }

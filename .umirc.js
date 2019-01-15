@@ -19,5 +19,6 @@ export default {
       },
     }],
   ],
-  base:'/itable'
+  base:'/itable',
+  publicPath:'/itable/'
 }
