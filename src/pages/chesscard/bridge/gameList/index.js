@@ -59,6 +59,7 @@ class GameList extends PureComponent {
     }
     render() {
         const { dataSource, loading, total } = this.state;
+        
         // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
         const url='/igame/#/game/1'
         console.log(dataSource);

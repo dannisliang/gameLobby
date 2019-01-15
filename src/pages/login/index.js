@@ -58,6 +58,8 @@ class UserBlock extends Component {
                     sid: sid
                 }
             })
+            localStorage.setItem('userName', account);
+            localStorage.setItem('pwd', password)
         } else {
             alert('登陆失败')
         }
@@ -137,7 +139,7 @@ class UserBlock extends Component {
                             <Link className={styles.forgetPwd} to="/user/forgetPWD">忘记密码</Link>
                         </div>
                         <Submit>登录</Submit>
-                       
+
                         <Divider></Divider>
                         {/* <Link className={styles.sponsorLogin} to="/user/loginSponsor">--- 主办方登录 ---</Link> */}
                     </Login>
