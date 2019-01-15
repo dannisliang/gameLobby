@@ -1,36 +1,36 @@
 import React from 'react';
-import { Layout } from 'antd';
-import SideMenu from '@/components/sideMenu';
-import HeaderUser from './header';
-const {Content } = Layout;
-export default class SiderDemo extends React.PureComponent {
-	state = {
-		collapsed: false,
-	};
-
-	toggle = () => {
-		this.setState({
-			collapsed: !this.state.collapsed,
-		});
+import { Layout, Drawer } from 'antd';
+import { connect } from 'dva';
+import Media from 'react-media';
+import router from 'umi/router';
+import BaseLayout from './BasicLayout';
+import LoginLayout from './LoginLayout';
+class LayoutConfig extends React.PureComponent {
+	state={}
+	static getDerivedStateFromProps(nextProps, prevState) {
+		const { login: { sid },location:{pathname} } = nextProps;
+        if(!sid&&pathname!=='/login'){
+            router.replace('/login')
+		}
+		return {...prevState}
 	}
-
 	render() {
-		const minHeight=window.screen.availHeight 
-		return (
-			<Layout>
-
-				<SideMenu collapsed={this.state.collapsed} />
-
-				<Layout>
-					<HeaderUser collapsed={this.state.collapsed} toggle={this.toggle} />
-
-					<Content
-						style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: minHeight*0.78, }}>
-						Content
-          			</Content>
-				</Layout>
-
-			</Layout>
-		);
+		console.log(this.props);
+		const {sid}=this.props.login;
+		if ( !sid) {
+			return <LoginLayout {...this.props}>{this.props.children}</LoginLayout>
+		} else {
+			return <BaseLayout {...this.props}> {this.props.children}</BaseLayout>
+		}
 	}
 }
+const mapStateToProps=({login})=>{
+	return {
+		login:login
+	}
+}
+export default connect(mapStateToProps)(props => (
+	<Media query="(max-width: 599px)">
+		{isMobile => <LayoutConfig {...props} isMobile={isMobile} />}
+	</Media>
+))

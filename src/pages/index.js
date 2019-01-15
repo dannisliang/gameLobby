@@ -1,8 +1,15 @@
-// import styles from './index.css';
-// import React from 'react';
-// import SideMenu from '@/components/sideMenu';
-// export default function() {
-//   return (
-   
-//   );
-// }
+import React from 'react';
+import Redirect from 'umi/redirect';
+export default function BeginRouter(props) {
+    const sid = window.localStorage.getItem('sid')
+    return (
+        <>
+            {sid ?
+                <Redirect to="/home" />
+                :
+
+                <Redirect to="/login" />
+            }
+        </>
+    )
+}

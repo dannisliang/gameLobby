@@ -1,55 +1,24 @@
-import React, { PureComponent } from 'react';
-import { Menu, Icon, Button, Layout } from 'antd';
-
-const SubMenu = Menu.SubMenu;
-
-class SideMenu extends PureComponent {
-	render() {
-		return (
-			<Layout.Sider
-				trigger={null}
-				collapsible
-				collapsed={this.props.collapsed}
-			>
-				<Menu
-					theme="dark"
-					mode="inline"
-					defaultSelectedKeys={['1']}
-				// defaultOpenKeys={['sub1']}
-				// inlineCollapsed={false}
-				>
-					<SubMenu key="sub1" title={<><Icon type="mail" /><span>棋牌游戏</span></>}>
-						<Menu.Item key="5">桥牌</Menu.Item>
-						<Menu.Item key="6">斗地主</Menu.Item>
-						<Menu.Item key="7">麻将</Menu.Item>
-						<Menu.Item key="8">飞行棋</Menu.Item>
-					</SubMenu>
-					<SubMenu key="sub2" title={<><Icon type="appstore" /><span>养成游戏</span></>}>
-						<Menu.Item key="9">剑灵</Menu.Item>
-						<Menu.Item key="10">天涯明月刀</Menu.Item>
-						<SubMenu key="sub3" title="Submenu">
-							<Menu.Item key="11">Option 11</Menu.Item>
-							<Menu.Item key="12">Option 12</Menu.Item>
-						</SubMenu>
-					</SubMenu>
-					<SubMenu key="sub4" title={<><Icon type="pie-chart" /><span>竞技游戏</span></>}>
-						<Menu.Item key="5">守望先锋</Menu.Item>
-						<Menu.Item key="6">英雄联盟</Menu.Item>
-						<Menu.Item key="7">星际争霸</Menu.Item>
-					</SubMenu>
-					<Menu.Item key="2">
-						<Icon type="desktop" />
-						<span>单机游戏</span>
-					</Menu.Item>
-					<Menu.Item key="3">
-						<Icon type="inbox" />
-						<span>手机游戏</span>
-					</Menu.Item>
-
-				</Menu>
-			</Layout.Sider>
-
+import SideMeun from './baseMeun'
+import Media from 'react-media';
+import { Drawer } from 'antd';
+function Side(props) {
+	const { isMobile ,toggle,collapsed} = props
+	return isMobile ? (
+		<Drawer
+			visible={!collapsed}
+			placement="left"
+			closable={false}
+			onClose={() => toggle()}
+			width={"auto"}
+			style={{
+				padding: 0,
+				height: '100vh',
+			  }}
+		>
+			<SideMeun {...props} />
+		</Drawer>
+	) : (
+			<SideMeun {...props} />
 		)
-	}
 }
-export default SideMenu
+export default Side

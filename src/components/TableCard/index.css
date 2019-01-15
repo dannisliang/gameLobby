@@ -1,0 +1,62 @@
+.flexwrap{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center; 
+}
+.boards{
+    border-radius: 6px;
+    background-image: url(@/assets/bg1.png);
+    background-size: 300px 300px;
+    display: inline-block;
+}
+.middleimg{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+.flexColumn{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.flexRow{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.flexItemASpace{
+    flex-grow: 1
+}
+.tableBack{
+    position: relative;
+    background-image: url(/imgs/old/bg1.png);
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+}
+.clearfix::before,
+.clearfix::after {
+    display: table;
+    content: " ";
+}
+.clearfix::after {
+    clear: both;
+}
+.clearfix{
+    *zoom: 1;
+}
+.border{
+    border-bottom: solid 3px white
+}
+.gutterRow{
+    min-width: 270px;
+    max-width: 450px;
+    padding-bottom: 16px;
+    cursor: pointer;
+    border-radius: 4%;
+    flex-grow: 1;
+}

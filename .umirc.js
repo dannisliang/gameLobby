@@ -14,8 +14,11 @@ export default {
         exclude: [
           /components/,
           /assets/,
+          /odoo/,
         ],
       },
     }],
   ],
+  base:'/itable',
+  publicPath:'/itable/'
 }
