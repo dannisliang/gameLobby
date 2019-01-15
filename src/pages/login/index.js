@@ -143,7 +143,7 @@ class UserBlock extends Component {
                         <Divider></Divider>
                         {/* <Link className={styles.sponsorLogin} to="/user/loginSponsor">--- 主办方登录 ---</Link> */}
                     </Login>
-                    <a className={styles.registerBtn} target="_blank" href='http://192.168.1.102:8000/user/register' >牌手注册</a>
+                    <a className={styles.registerBtn} target="_blank" href='/imatch/user/register' >牌手注册</a>
                     {/* 错误弹窗 */}
                     {/* <div>
                     <Modal
