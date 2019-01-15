@@ -6,7 +6,7 @@ export default {
     ['umi-plugin-react', {
       antd: true,
       dva: true,
-      dynamicImport: true,
+      // dynamicImport: true,按需加载
       title: 'gameLobby',
       dll: false,
       hardSource: false,
@@ -19,6 +19,7 @@ export default {
       },
     }],
   ],
+  // history:'hash',哈希路由将导致state不可用
   base:'/itable',
   publicPath:'/itable/'
 }
