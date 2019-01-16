@@ -18,16 +18,26 @@ class Bridge extends PureComponent {
             }
         })
     }
-    componentDidMount() {
-        this.getData()
+    componentDidMount() {      
+        this.getGameData()
     }
-    getData = async () => {
-        console.log(Odoo._rpc.sid);
+    getGameData = async () => {
         const game = Odoo.env('og.game');
         const fields = {
             name: null
         }
+        const userFields = {
+            "team_player_ids": null,
+            "todo_table_ids": null,
+            "done_table_ids": null,
+            "doing_table_ids": null,
+        }
         const damain = [['id', '>=', '0']]
+
+        const clss = await Odoo.user(userFields);
+        const ddd = clss.look(userFields);
+        console.log(ddd);
+        
         const dataSource = await game.search_read(damain, fields);
         console.log(dataSource);
         this.setState({ dataSource: dataSource, loading: false })
@@ -46,7 +56,6 @@ class Bridge extends PureComponent {
                                 </Col>
                             )
                         })
-
                         }
                     </Row>
                 </div>
