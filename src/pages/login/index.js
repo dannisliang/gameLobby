@@ -1,27 +1,18 @@
 import React, { Component } from 'react';
-import { Alert, Checkbox, Modal, Divider } from 'antd';
+import { Alert, message } from 'antd';
 import { Link } from 'dva/router';
 import styles from './index.css';
 import Login from '@/components/Login';
 import { connect } from 'dva';
-import Odoo from '@/odoo'
+
 import odoo from '../../odoo';
 import router from 'umi/router';
 // import logoPic from '../../../assets/BridgeLogo.png';
 const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
-
-console.log(Odoo);
-
 class UserBlock extends Component {
 
     state = {
-        notice: '',
         type: 'tab1',
-        autoLogin: true,
-        modalVisible: false,
-
-        lAccount: '',
-        pwd: ''
     }
     componentWillMount() {
         const sid = window.localStorage.getItem('sid');
@@ -29,24 +20,11 @@ class UserBlock extends Component {
             router.push('/home')
         }
     }
-    // 账号密码错误弹窗
-    showModal() {
-        this.props.dispatch({
-            type: 'login_m/showModal'
-        });
-    }
-    handleOk(e) {
-        this.props.dispatch({
-            type: 'login_m/handleOk'
-        });
-    }
-    handleCancel(e) {
-        this.props.dispatch({
-            type: 'login_m/handleCancel'
-        });
-    }
     //登录操作
     onSubmit = async (err, values) => {
+        if (err) {
+            return
+        }
         const { dispatch } = this.props
         const { account, password } = values;
         const sid = await odoo.login({ login: account, password: password });
@@ -61,25 +39,13 @@ class UserBlock extends Component {
             localStorage.setItem('userName', account);
             localStorage.setItem('pwd', password)
         } else {
-            alert('登陆失败')
+            message.warning('账户名或密码输入错误', 1.2)
         }
     }
     onTabChange = (key) => {
         this.setState({
             type: key,
         });
-    }
-    changeAutoLogin = (e) => {
-        this.setState({
-            autoLogin: e.target.checked,
-        });
-        if (this.state.autoLogin === true) {
-            localStorage.setItem('lAccount', this.state.lAccount);
-            localStorage.setItem('pwd', this.state.pwd);
-        } else {
-            localStorage.removeItem('lAccount');
-            localStorage.removeItem('pwd');
-        }
     }
     render() {
         return (
@@ -92,18 +58,9 @@ class UserBlock extends Component {
                         defaultActiveKey={this.state.type}
                         onTabChange={this.onTabChange}
                         onSubmit={this.onSubmit}
+                        enter={true}
                     >
                         <Tab key="tab1" tab="账号登录">
-                            {
-                                this.state.notice &&
-                                <Alert
-                                    style={{ marginBottom: 24 }}
-                                    message={this.state.notice}
-                                    type="error"
-                                    showIcon
-                                    closable
-                                />
-                            }
                             <UserName
                                 name="account"
                                 placeholder="账号"
@@ -128,48 +85,21 @@ class UserBlock extends Component {
                                 rules={[{ required: true, message: '验证码不能为空!' }]}
                             />
                         </Tab>
-                        <div>
-                            <Checkbox
-                                checked={this.state.autoLogin}
-                                onChange={this.changeAutoLogin}
-                                className={styles.rememberPwd}
-                            >
-                                保持一直登录
-                        </Checkbox>
-                            <Link className={styles.forgetPwd} to="/user/forgetPWD">忘记密码</Link>
+                        <div className={styles.forget}>
+                            <a target="_blank" rel="noopener norefferrer" href='/imatch/user/register' >牌手注册</a>
+                            <Link to="/user/forgetPWD">忘记密码</Link>
                         </div>
                         <Submit>登录</Submit>
-
-                        <Divider></Divider>
                         {/* <Link className={styles.sponsorLogin} to="/user/loginSponsor">--- 主办方登录 ---</Link> */}
                     </Login>
-                    <a className={styles.registerBtn} target="_blank" rel="noopener norefferrer" href='/imatch/user/register' >牌手注册</a>
-                    {/* 错误弹窗 */}
-                    {/* <div>
-                    <Modal
-                        title="提示"
-                        centered
-                        modalVisible={this.props.loginForm.modalVisible}
-                        onOk={this.handleOk.bind(this)}
-                        onCancel={this.handleCancel.bind(this)}
-                        okText="确定"
-                        cancelText="取消"
-                    >
-                        <p>账号或者密码错误，请重新输入...</p>
-                    </Modal>
-                </div>  */}
                 </div>
             </div>
         );
     };
 }
 
-
 // export default UserBlock;
-
 const mapStateToProps = ({ login }) => {
-
-
     return { login: login }
 }
 

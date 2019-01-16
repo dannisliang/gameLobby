@@ -1,12 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CardList from '@/components/CardList';
 import TableCard from '@/components/TableCard';
 import router from 'umi/router';
-import {Pagination, Spin } from 'antd';
-// import styles from './index.less';
+import { Pagination, Spin } from 'antd';
 import Odoo from '@/odoo'
-import { async } from 'q';
 class GameList extends PureComponent {
     state = {
         dataSource: [],
@@ -39,7 +36,7 @@ class GameList extends PureComponent {
         console.log(ddd);
         await this.setState({ total: count })
     }
-    getData = async (game_id,page = 1, pageSize = 8) => {
+    getData = async (game_id, page = 1, pageSize = 8) => {
         this.setState({ loading: true })
         console.log(game_id);
         const cls = Odoo.env('og.table');
@@ -79,8 +76,7 @@ class GameList extends PureComponent {
                 <Pagination
                     pageSize={8}
                     onChange={this.getData}
-                    total={total}
-                    url={url} />
+                    total={total} />
             </Spin>
         )
     }
