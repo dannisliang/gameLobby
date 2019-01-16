@@ -26,7 +26,12 @@
 .rememberPwd {
     margin-left: 10px;
 }
-
+.forget{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 0 15px
+}
 .forgetPwd {
     margin-left: 155px;
 }

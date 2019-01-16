@@ -9,8 +9,8 @@ const FormItem = Form.Item;
 
 class WrapFormItem extends Component {
   static defaultProps = {
-    getCaptchaButtonText: 'captcha',
-    getCaptchaSecondText: 'second',
+    getCaptchaButtonText: '获取验证码',
+    getCaptchaSecondText: '秒',
   };
 
   constructor(props) {

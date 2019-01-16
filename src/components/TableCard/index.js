@@ -14,7 +14,7 @@ const TableCard = (props) => {
                             <Col key={index} className={styles.gutterRow} xs={24} sm={12} md={8} xl={6}>
                                 <Card
                                     title={item.round_id.name + item.number}
-                                    extra={<a target="_blank" href={url}>进入游戏</a>}>
+                                    extra={<a target="_blank" rel="noopener norefferrer" href={url}>进入游戏</a>}>
                                     <div className={index.tableBack}>
                                         <TableCell tableData={item} size={size} scale={scale} margin={margin} type={"open"}></TableCell>
                                         {/* {<TableMask />} */}
