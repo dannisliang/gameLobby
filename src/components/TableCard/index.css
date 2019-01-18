@@ -54,7 +54,7 @@
 }
 .gutterRow{
     min-width: 270px;
-    max-width: 450px;
+    max-width: 350px;
     padding-bottom: 16px;
     cursor: pointer;
     border-radius: 4%;
