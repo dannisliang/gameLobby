@@ -98,7 +98,7 @@ class RPC {
       host = '/api',
       db,
       sid =null,
-      uid= localStorage.getItem('uid'),
+      uid= null,
       timeout = 120,
       callbackerror // = () => false,
     } = options;
@@ -156,6 +156,7 @@ class RPC {
         } = data;
         this.sid = sid;
         this.uid = uid;
+        window.localStorage.setItem('sid',sid)
         window.localStorage.setItem('uid',uid)
       } else {
         this.sid = null;

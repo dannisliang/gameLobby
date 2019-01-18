@@ -52,7 +52,8 @@ class Odoo {
 
         const { host, db, modules, models } = options
         const sid=localStorage.getItem('sid')
-        const rpc = new RPC({ host,db,sid })
+        const uid=localStorage.getItem('uid')
+        const rpc = new RPC({ host,db,sid,uid })
         this._rpc = rpc
         this._models = models||{}
 

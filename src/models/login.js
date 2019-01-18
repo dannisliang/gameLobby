@@ -8,7 +8,6 @@ export default {
     reducers: {
         login(state, { payload }) {
             const { sid } = payload;
-            window.localStorage.setItem('sid',sid)
             console.log(sid);
             return { ...state, sid: sid }
         },
