@@ -1,3 +1,5 @@
+import odoo from '@/odoo'
+import router from 'umi/router';
 export default {
     namespace: 'login',
     state: {
@@ -5,10 +7,37 @@ export default {
         managener: false,
         user: {},
     },
-    reducers: {
-        login(state, { payload }) {
+    effects: {
+        *login({ payload }, { put }) {
             const { sid } = payload;
-            console.log(sid);
+            if (sid) {
+                yield put({
+                    type: 'loginSid',
+                    payload: { sid: sid }
+                })
+            } else {
+                const isNew = yield odoo.verify();
+                if (isNew) {
+                    yield put({
+                        type: 'loginSid',
+                        payload: { sid: sid }
+                    })
+                } else {
+                    yield put({
+                        type: 'loginSid',
+                        payload: { sid: null }
+                    })
+                    router.push('/login')
+                }
+            }
+        }
+    },
+    reducers: {
+        loginSid(state, { payload }) {
+            let { sid } = payload;
+            if (!sid) {
+                sid = null
+            }
             return { ...state, sid: sid }
         },
         logout(state, { payload }) {

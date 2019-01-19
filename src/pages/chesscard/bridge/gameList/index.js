@@ -4,6 +4,7 @@ import TableCard from '@/components/TableCard';
 import router from 'umi/router';
 import { Pagination, Spin } from 'antd';
 import Odoo from '@/odoo'
+import { connect } from 'dva';
 import { PopData } from '@/utils';
 class GameList extends PureComponent {
     state = {
@@ -14,10 +15,8 @@ class GameList extends PureComponent {
     componentDidMount() {
         const { location: { state } } = this.props;
         if (!state) {
-            console.log(state);
             router.replace('/chesscard/bridge');
-        } else {
-            console.log(state);
+        } else if (this.props.login.sid) {
             this.getTotal()
             this.getData()
         }
@@ -35,7 +34,7 @@ class GameList extends PureComponent {
         console.log(ids);
         this.setState({ loading: true });
         const cls = Odoo.env('og.table');
-        const domain = [['game_id', '=', game_id,],['id','not in',ids]];
+        const domain = [['game_id', '=', game_id,], ['id', 'not in', ids]];
         const fields = {
             number: null,
             match_id: null,
@@ -49,20 +48,24 @@ class GameList extends PureComponent {
         if (page === 1) {
             limit = pageSize - doing_table_ids.length;
         } else {
-            offset=this.state.dataSource[this.state.dataSource.length-1].id    
+            offset = this.state.dataSource[this.state.dataSource.length - 1].id
             limit = pageSize;
         }
-        let dataSource = await cls.search_read(domain, fields, { offset, limit ,order:'id'});
-        if(page===1){
+        let dataSource = await cls.search_read(domain, fields, { offset, limit, order: 'id' });
+        if (page === 1) {
             doing_table_ids.forEach(item => {
-                item.user=true
+                item.user = true
             })
-            dataSource=[...doing_table_ids,...dataSource]
+            dataSource = [...doing_table_ids, ...dataSource]
         }
-        this.setState({
-            dataSource: dataSource,
-            loading: false,
-        })
+        try {
+            this.setState({
+                dataSource: dataSource,
+                loading: false,
+            })
+        } catch (err) {
+            console.log('组件已卸载');
+        }
     }
     render() {
         const { dataSource, loading, total } = this.state;
@@ -90,4 +93,4 @@ class GameList extends PureComponent {
     }
 }
 
-export default GameList
+export default connect(({ login }) => ({ login }))(GameList)

@@ -5,6 +5,7 @@ import { Card, Row, Col, Spin } from 'antd';
 import styles from './index.less';
 import Odoo from '@/odoo';
 import { PopData } from '@/utils';
+import { connect } from 'dva'
 class Bridge extends PureComponent {
     state = {
         dataSource: [],
@@ -22,7 +23,9 @@ class Bridge extends PureComponent {
         })
     }
     componentDidMount() {
-        this.getGameData()
+        if (this.props.login.sid) {
+            this.getGameData()
+        }
     }
     getGameData = async () => {
         const game = Odoo.env('og.game');
@@ -46,14 +49,20 @@ class Bridge extends PureComponent {
         const damain = [['id', '>=', '0']];
 
         const clss = await Odoo.user(userFields);
-        const userdata = clss.look(userFields);
-        const doing_game_ids = userdata.doing_table_ids.map((item) => item.game_id.id);
-        const dataSource = await game.search_read(damain, fields);
-        this.setState({
-            dataSource: PopData(dataSource, doing_game_ids),
-            doing_game_ids: userdata.doing_table_ids,
-            loading: false,
-        });
+        let doing_game_ids, dataSource, userdata
+        try {
+            userdata = clss.look(userFields);
+            doing_game_ids = userdata.doing_table_ids.map((item) => item.game_id.id);
+            dataSource = await game.search_read(damain, fields);
+            this.setState({
+                dataSource: PopData(dataSource, doing_game_ids),
+                doing_game_ids: userdata.doing_table_ids,
+                loading: false,
+            });
+        } catch (err) {
+            alert('sid超期')
+        }
+
     }
     render() {
         const { dataSource, loading } = this.state;
@@ -87,4 +96,4 @@ class Bridge extends PureComponent {
     }
 }
 
-export default Bridge
+export default connect(({ login }) => ({ login }))(Bridge)

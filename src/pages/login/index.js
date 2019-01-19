@@ -31,7 +31,7 @@ class UserBlock extends Component {
         if (sid) {
             console.log(sid);
             dispatch({
-                type: 'login/login',
+                type: 'login/loginSid',
                 payload: {
                     sid: sid
                 }
