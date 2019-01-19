@@ -6,10 +6,9 @@ import router from 'umi/router';
 import BaseLayout from './BasicLayout';
 import LoginLayout from './LoginLayout';
 import odoo from '@/odoo'
-import { async } from 'q';
 class LayoutConfig extends React.PureComponent {
 	state = {
-		
+
 	}
 	static getDerivedStateFromProps(nextProps, prevState) {
 		const { login: { sid }, location: { pathname } } = nextProps;
@@ -18,11 +17,14 @@ class LayoutConfig extends React.PureComponent {
 		}
 		return { ...prevState }
 	}
-	componentDidMount(){
-		this.props.dispatch({
-			type:'login/login',
-			payload:{}
-		})
+	componentDidMount() {
+		const { login: { sid }, location: { pathname } } = this.props;
+		if (!sid && pathname !== '/login') {
+			this.props.dispatch({
+				type: 'login/login',
+				payload: {}
+			})
+		}
 	}
 	render() {
 		console.log(this.props);

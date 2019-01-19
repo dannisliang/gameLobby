@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import TableCell from './tableCell.js';
 import { Card, Row, Col } from 'antd';
 import styles from './index.css'
+const jump=(item)=>{
+    if(item.user){
+        localStorage.setItem('doing_table_id',item.id)
+    }
+}
 const TableCard = (props) => {
     const { dataSource, size = 200, scale = 0.1, margin = 10,url} = props;
     const style = {
@@ -21,7 +26,7 @@ const TableCard = (props) => {
                             style={item.user===true?style:null}>
                                 <Card
                                     title={item.round_id.name + item.number}
-                                    extra={<a target="_blank" rel="noopener norefferrer" href={url}>进入游戏</a>}>
+                                    extra={<a target="_blank" rel="noopener norefferrer" onClick={jump.bind(this,item)} href={url}>{item.user?'进入游戏':''}</a>}>
                                     <div className={index.tableBack}>
                                         <TableCell tableData={item} size={size} scale={scale} margin={margin} type={"open"}></TableCell>
                                         {/* {<TableMask />} */}
