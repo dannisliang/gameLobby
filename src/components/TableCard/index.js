@@ -3,13 +3,8 @@ import PropTypes from 'prop-types'
 import TableCell from './tableCell.js';
 import { Card, Row, Col } from 'antd';
 import styles from './index.css'
-const jump=(item)=>{
-    if(item.user){
-        localStorage.setItem('doing_table_id',item.id)
-    }
-}
 const TableCard = (props) => {
-    const { dataSource, size = 200, scale = 0.1, margin = 10,url} = props;
+    const { dataSource, size = 200, scale = 0.1, margin = 10,url,jump} = props;
     const style = {
         border: "2px solid red"
     }

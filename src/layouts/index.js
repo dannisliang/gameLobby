@@ -19,7 +19,7 @@ class LayoutConfig extends React.PureComponent {
 	}
 	componentDidMount() {
 		const { login: { sid }, location: { pathname } } = this.props;
-		if (!sid && pathname !== '/login') {
+		if (pathname !== '/login') {
 			this.props.dispatch({
 				type: 'login/login',
 				payload: {}

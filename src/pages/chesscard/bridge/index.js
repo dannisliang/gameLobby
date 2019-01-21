@@ -61,6 +61,7 @@ class Bridge extends PureComponent {
             });
         } catch (err) {
             alert('sid超期')
+            // router.push('/login')
         }
 
     }
