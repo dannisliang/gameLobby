@@ -10,7 +10,8 @@ class GameList extends PureComponent {
     state = {
         dataSource: [],
         loading: true,
-        total: 0
+        total: 0,
+        doing_table_id:undefined,
     }
     componentDidMount() {
         const { location: { state } } = this.props;
@@ -67,18 +68,21 @@ class GameList extends PureComponent {
             console.log('组件已卸载');
         }
     }
-    jump=(item,e)=>{
-        if(item.user&&item.state!=='done'&&item.state!=='cancel'){0
-            localStorage.setItem('doing_table_id',item.id)
-        }else{
+    jump = (item, e) => {
+        if (item.user && item.state !== 'done' && item.state !== 'cancel') {
+            this.setState({
+                doing_table_id:item.id
+            })
+            localStorage.setItem('doing_table_id', item.id)
+        } else {
             alert('已经打过此桌')
             e.preventDefault()
         }
     }
     render() {
-        const { dataSource, loading, total } = this.state;
+        const { dataSource, loading, total, doing_table_id } = this.state;
         // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
-        const url = '/igame/#/game/1';
+        const url = '/igame/#/game/'+Number(doing_table_id);
         // const url='https://www.baidu.com/'
         console.log(dataSource);
         return (
