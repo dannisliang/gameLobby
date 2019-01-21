@@ -7,7 +7,7 @@ import topPic3 from '@/assets/topPic3.jpg';
 import logo1 from '@/assets/logo1.png';
 import timeM from '@/assets/time-manager.png';
 import projectM from '@/assets/project-manager.png';
-import appPic from '@/assets/APP.png'
+import appPic from '@/assets/App.png'
 import webDesign from '@/assets/computer.png';
 
 // console.log('------home ------',props);
