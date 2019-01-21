@@ -15,7 +15,7 @@ class UserBlock extends Component {
         type: 'tab1',
     }
     componentWillMount() {
-        const sid = window.localStorage.getItem('sid');
+        const { sid }= this.props.login;
         if (sid) {
             router.push('/home')
         }

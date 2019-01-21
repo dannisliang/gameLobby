@@ -9,6 +9,7 @@ import router from 'umi/router'
 class UserTop extends PureComponent {
     logout = () => {
         const { dispatch } = this.props;
+        router.push('/login')
         dispatch({
             type: 'login/logout'
         })

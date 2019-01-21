@@ -9,6 +9,7 @@ export default {
     },
     effects: {
         *login({ payload }, { put }) {
+       
             const { sid } = payload;
             if (sid) {
                 yield put({
@@ -17,16 +18,11 @@ export default {
                 })
             } else {
                 const isNew = yield odoo.verify();
-                if (isNew) {
+                if (!isNew) {
                     yield put({
-                        type: 'loginSid',
-                        payload: { sid: sid }
+                        type: 'logout',
                     })
-                } else {
-                    yield put({
-                        type: 'loginSid',
-                        payload: { sid: null }
-                    })
+                    console.log(11111);
                     router.push('/login')
                 }
             }
@@ -36,7 +32,8 @@ export default {
         loginSid(state, { payload }) {
             let { sid } = payload;
             if (!sid) {
-                sid = null
+                sid = null;
+                localStorage.removeItem('sid')
             }
             return { ...state, sid: sid }
         },
