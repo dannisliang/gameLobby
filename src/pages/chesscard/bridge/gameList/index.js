@@ -93,7 +93,12 @@ class GameList extends PureComponent {
                 item.user = true
             })
             console.log(trueData);
-            dataSource = [...trueData, ...dataSource]
+            if(doing_table_ids.length===0){
+                dataSource = [...trueData, ...dataSource]
+            }else{
+                dataSource = [...doing_table_ids, ...dataSource]
+            }
+            
         }
         try {
             this.setState({
