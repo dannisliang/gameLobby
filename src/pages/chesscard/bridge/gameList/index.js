@@ -32,7 +32,7 @@ class GameList extends PureComponent {
     }
     getData = async (page = 1, pageSize = 8) => {
         const { location: { state: { game_id, doing_table_ids } } } = this.props;
-        let trueData
+        let trueData=[]
 
         const ids = doing_table_ids.map((item) => item.game_id.id);
         console.log(ids);
