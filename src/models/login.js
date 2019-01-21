@@ -9,7 +9,6 @@ export default {
     },
     effects: {
         *login({ payload }, { put }) {
-       
             const { sid } = payload;
             if (sid) {
                 yield put({
@@ -22,7 +21,6 @@ export default {
                     yield put({
                         type: 'logout',
                     })
-                    console.log(11111);
                     router.push('/login')
                 }
             }

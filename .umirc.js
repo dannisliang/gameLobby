@@ -7,7 +7,7 @@ export default {
       antd: true,
       dva: true,
       // dynamicImport: true,按需加载
-      title: 'gameLobby',
+      title: '智赛竞技平台',
       dll: false,
       hardSource: false,
       routes: {
