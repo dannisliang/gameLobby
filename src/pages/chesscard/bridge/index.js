@@ -44,6 +44,7 @@ class Bridge extends PureComponent {
                 round_id: null,
                 date_from: null,
                 date_thru: null,
+                state:null,
             },
         }
         const damain = [['id', '>=', '0']];
@@ -52,11 +53,12 @@ class Bridge extends PureComponent {
         let doing_game_ids, dataSource, userdata
         try {
             userdata = clss.look(userFields);
+            console.log(userdata);
             doing_game_ids = userdata.doing_table_ids.map((item) => item.game_id.id);
             dataSource = await game.search_read(damain, fields);
             this.setState({
                 dataSource: PopData(dataSource, doing_game_ids),
-                doing_game_ids: userdata.doing_table_ids,
+                doing_game_ids: userdata.doing_table_ids.filter((item)=>item.state!=='done'),
                 loading: false,
             });
         } catch (err) {

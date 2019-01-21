@@ -6,12 +6,13 @@ import { Pagination, Spin } from 'antd';
 import Odoo from '@/odoo'
 import { connect } from 'dva';
 import { PopData } from '@/utils';
+import { async } from 'q';
 class GameList extends PureComponent {
     state = {
         dataSource: [],
         loading: true,
         total: 0,
-        doing_table_id:undefined,
+        doing_table_id: undefined,
     }
     componentDidMount() {
         const { location: { state } } = this.props;
@@ -31,6 +32,8 @@ class GameList extends PureComponent {
     }
     getData = async (page = 1, pageSize = 8) => {
         const { location: { state: { game_id, doing_table_ids } } } = this.props;
+        let trueData
+
         const ids = doing_table_ids.map((item) => item.game_id.id);
         console.log(ids);
         this.setState({ loading: true });
@@ -43,6 +46,7 @@ class GameList extends PureComponent {
             round_id: null,
             date_from: null,
             date_thru: null,
+            state: null,
         }
         let offset, limit
         //将用户的桌子放在第一个页显示，所有的数据桌子都要向后推移，故作此判断。
@@ -53,11 +57,43 @@ class GameList extends PureComponent {
             limit = pageSize;
         }
         let dataSource = await cls.search_read(domain, fields, { offset, limit, order: 'id' });
+        if (doing_table_ids.length === 0) {
+            const { location: { state: { game_id, doing_table_ids } } } = this.props;
+            const fields1 = {
+                number: null,
+                match_id: null,
+                room_type: null,
+                round_id: null,
+                date_from: null,
+                date_thru: null,
+                state: null,
+                player_ids: {
+                    name: null
+                }
+            }
+            const cls = Odoo.env('og.table');
+            const domain = [['game_id', '=', game_id,],];
+            const data = await cls.search_read(domain, fields1) || [];
+            trueData = data.filter((item) => {
+                if (item.state !== 'done') {
+                    const play = item.player_ids.map((item) => item.name);
+                    if (play.indexOf(localStorage.userName) > -1) {
+                        return true
+                    }
+                } else {
+                    return false
+                }
+            })
+        }
         if (page === 1) {
             doing_table_ids.forEach(item => {
                 item.user = true
             })
-            dataSource = [...doing_table_ids, ...dataSource]
+            trueData.forEach(item => {
+                item.user = true
+            })
+            console.log(trueData);
+            dataSource = [...trueData, ...dataSource]
         }
         try {
             this.setState({
@@ -68,10 +104,39 @@ class GameList extends PureComponent {
             console.log('组件已卸载');
         }
     }
+    test = async () => {
+        const { location: { state: { game_id, doing_table_ids } } } = this.props;
+        const fields = {
+            number: null,
+            match_id: null,
+            room_type: null,
+            round_id: null,
+            date_from: null,
+            date_thru: null,
+            state: null,
+            player_ids: {
+                name: null
+            }
+        }
+        const cls = Odoo.env('og.table');
+        const domain = [['game_id', '=', game_id,],];
+        const data = await cls.search_read(domain, fields) || [];
+        const trueData = data.filter((item) => {
+            if (item.state !== 'done') {
+                const play = item.player_ids.map((item) => item.name);
+                if (play.indexOf(localStorage.userName) > -1) {
+                    return true
+                }
+            } else {
+                return false
+            }
+        })
+        console.log(trueData);
+    }
     jump = (item, e) => {
         if (item.user && item.state !== 'done' && item.state !== 'cancel') {
             this.setState({
-                doing_table_id:item.id
+                doing_table_id: item.id
             })
             localStorage.setItem('doing_table_id', item.id)
         } else {
@@ -82,7 +147,7 @@ class GameList extends PureComponent {
     render() {
         const { dataSource, loading, total, doing_table_id } = this.state;
         // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
-        const url = '/igame/#/game/'+Number(doing_table_id);
+        const url = '/igame/#/game/' + Number(doing_table_id);
         // const url='https://www.baidu.com/'
         console.log(dataSource);
         return (
@@ -94,7 +159,7 @@ class GameList extends PureComponent {
                     scale={0.1}
                     url={url}
                 />
-                {total > 8 ?
+                {total > 4 ?
                     <Pagination
                         pageSize={8}
                         onChange={this.getData}
