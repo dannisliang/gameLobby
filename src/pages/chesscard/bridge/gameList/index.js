@@ -32,7 +32,7 @@ class GameList extends PureComponent {
     }
     getData = async (page = 1, pageSize = 8) => {
         const { location: { state: { game_id, doing_table_ids } } } = this.props;
-        let trueData=[]
+        let trueData = []
 
         const ids = doing_table_ids.map((item) => item.game_id.id);
         console.log(ids);
@@ -58,7 +58,6 @@ class GameList extends PureComponent {
         }
         let dataSource = await cls.search_read(domain, fields, { offset, limit, order: 'id' });
         if (doing_table_ids.length === 0) {
-            const { location: { state: { game_id, doing_table_ids } } } = this.props;
             const fields1 = {
                 number: null,
                 match_id: null,
@@ -75,7 +74,7 @@ class GameList extends PureComponent {
             const domain = [['game_id', '=', game_id,],];
             const data = await cls.search_read(domain, fields1) || [];
             trueData = data.filter((item) => {
-                if (item.state !== 'done') {
+                if (item.state !== 'done' && item.state !== 'cancel'&& item.state !== 'close') {
                     const play = item.player_ids.map((item) => item.name);
                     if (play.indexOf(localStorage.userName) > -1) {
                         return true
@@ -93,12 +92,12 @@ class GameList extends PureComponent {
                 item.user = true
             })
             console.log(trueData);
-            if(doing_table_ids.length===0){
+            if (doing_table_ids.length === 0) {
                 dataSource = [...trueData, ...dataSource]
-            }else{
+            } else {
                 dataSource = [...doing_table_ids, ...dataSource]
             }
-            
+
         }
         try {
             this.setState({
@@ -139,7 +138,7 @@ class GameList extends PureComponent {
         console.log(trueData);
     }
     jump = (item, e) => {
-        if (item.user && item.state !== 'done' && item.state !== 'cancel') {
+        if (item.user && item.state !== 'done' && item.state !== 'cancel'&& item.state !== 'close') {
             this.setState({
                 doing_table_id: item.id
             })
