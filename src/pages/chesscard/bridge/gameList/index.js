@@ -33,9 +33,7 @@ class GameList extends PureComponent {
     getData = async (page = 1, pageSize = 8) => {
         const { location: { state: { game_id, doing_table_ids } } } = this.props;
         let trueData = []
-
-        const ids = doing_table_ids.map((item) => item.game_id.id);
-        console.log(ids);
+        const ids = doing_table_ids.map((item) => item.id);
         this.setState({ loading: true });
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,], ['id', 'not in', ids]];
@@ -91,7 +89,7 @@ class GameList extends PureComponent {
             trueData.forEach(item => {
                 item.user = true
             })
-            console.log(trueData);
+            console.log(trueData,doing_table_ids);
             if (doing_table_ids.length === 0) {
                 dataSource = [...trueData, ...dataSource]
             } else {
@@ -125,6 +123,7 @@ class GameList extends PureComponent {
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,],];
         const data = await cls.search_read(domain, fields) || [];
+        console.log(data);
         const trueData = data.filter((item) => {
             if (item.state !== 'done') {
                 const play = item.player_ids.map((item) => item.name);
