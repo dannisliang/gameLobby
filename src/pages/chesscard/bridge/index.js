@@ -18,7 +18,7 @@ class Bridge extends PureComponent {
             pathname: '/chesscard/bridge/gameList',
             state: {
                 game_id: data.id,
-                doing_table_ids: this.state.doing_game_ids.filter((item)=>item.game_id.id===data.id),//只传递属于该game的doing_table_ids
+                doing_table_ids: this.state.doing_game_ids.filter((item) => item.game_id.id === data.id),//只传递属于该game的doing_table_ids
             }
         })
     }
