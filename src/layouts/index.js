@@ -25,17 +25,6 @@ class LayoutConfig extends React.PureComponent {
 				payload: {}
 			})
 		}
-		window.addEventListener('storage',(e)=>{
-			if(e.key==='sid'){
-				this.props.dispatch({
-					type: 'login/login',
-					payload: {sid:e.newValue}
-				})
-			}
-		})
-	}
-	componentWillUnmount(){
-		window.removeEventListener('storage')
 	}
 	render() {
 		console.log(this.props);

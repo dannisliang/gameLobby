@@ -23,7 +23,7 @@ class Bridge extends PureComponent {
         })
     }
     componentDidMount() {
-        if (this.props.login.sid) {
+        if (this.props.login.sid && localStorage.sid) {
             this.getGameData()
         }
     }
@@ -44,7 +44,7 @@ class Bridge extends PureComponent {
                 round_id: null,
                 date_from: null,
                 date_thru: null,
-                state:null,
+                state: null,
             },
         }
         const damain = [['id', '>=', '0']];
@@ -58,7 +58,7 @@ class Bridge extends PureComponent {
             dataSource = await game.search_read(damain, fields);
             this.setState({
                 dataSource: PopData(dataSource, doing_game_ids),
-                doing_game_ids: userdata.doing_table_ids.filter((item)=>item.state!=='done'),
+                doing_game_ids: userdata.doing_table_ids.filter((item) => item.state !== 'done'),
                 loading: false,
             });
         } catch (err) {

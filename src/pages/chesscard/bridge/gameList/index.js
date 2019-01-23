@@ -18,7 +18,7 @@ class GameList extends PureComponent {
         const { location: { state } } = this.props;
         if (!state) {
             router.replace('/chesscard/bridge');
-        } else if (this.props.login.sid) {
+        } else if (this.props.login.sid && localStorage.sid) {
             this.getTotal()
             this.getData()
         }
@@ -74,7 +74,7 @@ class GameList extends PureComponent {
             const domain = [['game_id', '=', game_id,],];
             const data = await cls.search_read(domain, fields1) || [];
             trueData = data.filter((item) => {
-                if (item.state !== 'done' && item.state !== 'cancel'&& item.state !== 'close') {
+                if (item.state !== 'done' && item.state !== 'cancel' && item.state !== 'close') {
                     const play = item.player_ids.map((item) => item.name);
                     if (play.indexOf(localStorage.userName) > -1) {
                         return true
@@ -138,7 +138,7 @@ class GameList extends PureComponent {
         console.log(trueData);
     }
     jump = (item, e) => {
-        if (item.user && item.state !== 'done' && item.state !== 'cancel'&& item.state !== 'close') {
+        if (item.user && item.state !== 'done' && item.state !== 'cancel' && item.state !== 'close') {
             this.setState({
                 doing_table_id: item.id
             })
