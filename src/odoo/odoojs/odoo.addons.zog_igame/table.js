@@ -68,6 +68,7 @@ export default  {
                 "todo_table_ids",
                 "done_table_ids",
                 "doing_table_ids",
+                "emial",
             ]
         },
 
