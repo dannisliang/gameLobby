@@ -1,24 +1,33 @@
-
-@media screen and (min-width:100px){
-    .toppicCarousel{
+@media screen and (min-width:100px) {
+    .toppicCarousel {
         margin-top: 1%;
-        width:100%;
-        height:auto;
-        max-height: 350px;
-    }
-    .toppic{
         width: 100%;
         height: auto;
         max-height: 350px;
     }
-/************/
-    .majorTitle, .caseTitle, .companyInfoTitle{
-        font-size: 15px;
-        color: rgb(24, 144,255);
-        font-weight: bolder;
-        border-bottom: rgb(24, 144,255)solid 1px;
+    .toppic {
+        width: 100%;
+        height: auto;
+        max-height: 350px;
     }
-    .majorList{
+    /************/
+    .bigNews,
+    .majorTitle,
+    .caseTitle,
+    .companyInfoTitle {
+        font-size: 15px;
+        color: rgb(24, 144, 255); // font-weight: bolder;
+        padding-top: 5%;
+        border-bottom: rgb(24, 144, 255)solid 1px;
+        position: relative;
+        span {
+            position: absolute;
+            right: 1%;
+            bottom: 1%;
+            font-size: 13px;
+        }
+    }
+    .majorList {
         /* background-color: lightblue; */
         width: 100%;
         /* height: 100px; */
@@ -26,7 +35,7 @@
         margin: 0 auto;
         text-align: center;
     }
-    .majorDiv{
+    .majorDiv {
         display: inline-block;
         margin: 3%;
         text-align: center;
@@ -35,71 +44,81 @@
         /* padding-bottom: 3%; */
         width: 44%;
     }
-    .majorPic{
+    .majorPic {
         width: 40px;
         /* margin: 5%; */
         display: block;
         margin: 0 auto;
     }
-    .majorName{
+    .majorName {
         color: black;
         font-size: 13px;
         padding-top: 5%;
         font-weight: bolder;
     }
-    .majorDescribe{
+    .majorDescribe {
         font-size: 11px;
         color: grey;
         padding-top: 2%;
         text-indent: 2em;
         text-align: left;
     }
-/************/
-    .caseList{
+    /************/
+    .caseList {
         /* background-color: fuchsia; */
         /* padding: 2%; */
     }
-    .casePic{
+    .casePic {
         width: 96%;
         height: auto;
         margin: 2%;
         border-radius: 2%;
     }
-/************/
-    .companyInfo{
+    /************/
+    .companyInfo {
         width: 96%;
         background-color: lightgray;
         margin: 2%;
         border-radius: 1%;
         padding: 5px;
     }
-    .companyInfoPic{
+    .companyInfoPic {
         width: 150px;
         height: 150px;
         float: left;
     }
 }
-@media screen and (min-width: 768px){
-    .toppicCarousel{
+
+@media screen and (min-width: 768px) {
+    .toppicCarousel {
         margin-top: 3%;
         margin-left: 3%;
-        width:94%;
-        height:auto;
+        width: 94%;
+        height: auto;
         max-height: 350px;
     }
-    .toppic{
+    .toppic {
         width: 100%;
         height: auto;
         max-height: 350px;
     }
-/************/
-    .majorTitle, .caseTitle, .companyInfoTitle{
+    /************/
+    .bigNews,
+    .majorTitle,
+    .caseTitle,
+    .companyInfoTitle {
         font-size: 25px;
-        color: rgb(24, 144,255);
-        font-weight: bolder;
-        border-bottom: rgb(24, 144,255) solid 2px;
+        color: rgb(24, 144, 255); // font-weight: bolder;
+        padding-top: 5%;
+        border-bottom: rgb(24, 144, 255) solid 2px;
+        span {
+            position: absolute;
+            right: 1%;
+            bottom: 1%;
+            font-size: 13px;
+        }
     }
-    .majorList{
+    .majorList {
         /* background-color: blue; */
         width: 100%;
         /* height: 100px; */
@@ -107,7 +126,7 @@
         margin: 0 auto;
         text-align: center;
     }
-    .majorDiv{
+    .majorDiv {
         display: inline-block;
         margin: 3%;
         text-align: center;
@@ -115,31 +134,31 @@
         /* padding-bottom: 3%; */
         width: 44%;
     }
-    .majorPic{
+    .majorPic {
         width: 60px;
         /* margin: 5%; */
         display: block;
         margin: 0 auto;
     }
-    .majorName{
+    .majorName {
         color: black;
         font-size: 13px;
         padding-top: 5%;
         font-weight: bolder;
     }
-    .majorDescribe{
+    .majorDescribe {
         font-size: 11px;
         color: grey;
         padding-top: 2%;
         text-indent: 2em;
         text-align: left;
     }
-/************/
-    .caseList{
+    /************/
+    .caseList {
         /* background-color: rebeccapurple; */
         /* padding: 2%; */
     }
-    .casePic{
+    .casePic {
         width: 29%;
         height: auto;
         margin: 2%;
@@ -147,25 +166,34 @@
     }
 }
 
-@media screen and (min-width: 992px){
-    .toppicCarousel{
+@media screen and (min-width: 992px) {
+    .toppicCarousel {
         margin-top: 3%;
         display: inline-block;
         margin-left: 5%;
-        width:90%;
-        height:350px;
+        width: 90%;
+        height: 350px;
     }
-    .toppic{
+    .toppic {
         width: 100%;
         height: 350px;
     }
-    .majorTitle, .caseTitle, .companyInfoTitle{
+    .bigNews,
+    .majorTitle,
+    .caseTitle,
+    .companyInfoTitle {
         font-size: 30px;
-        color: rgb(24, 144,255);
-        font-weight: bolder;
-        border-bottom: rgb(24, 144,255) solid 2px;
+        color: rgb(24, 144, 255); // font-weight: bolder;
+        padding-top: 5%;
+        border-bottom: rgb(24, 144, 255) solid 2px;
+        span {
+            position: absolute;
+            right: 1%;
+            bottom: 1%;
+            font-size: 13px;
+        }
     }
-    .majorList{
+    .majorList {
         /* background-color: greenyellow; */
         width: 100%;
         /* height: 100px; */
@@ -173,7 +201,7 @@
         margin: 0 auto;
         text-align: center;
     }
-    .majorDiv{
+    .majorDiv {
         display: inline-block;
         margin: 3%;
         text-align: center;
@@ -181,19 +209,19 @@
         /* padding-bottom: 3%;  */
         width: 19%;
     }
-    .majorPic{
+    .majorPic {
         width: 70px;
         /* margin: 5%; */
         display: block;
         margin: 0 auto;
     }
-    .majorName{
+    .majorName {
         color: black;
         font-size: 13px;
         padding-top: 5%;
         font-weight: bolder;
     }
-    .majorDescribe{
+    .majorDescribe {
         font-size: 11px;
         color: grey;
         padding-top: 2%;
@@ -202,31 +230,31 @@
     }
 }
 
-@media screen and (min-width: 1200px){
-    .toppicCarousel{
+@media screen and (min-width: 1200px) {
+    .toppicCarousel {
         margin-top: 2%;
         margin-left: 10%;
-        width:80%;
+        width: 80%;
         height: 350px;
         max-width: 1024px;
     }
-    .toppic{
+    .toppic {
         width: 100%;
         height: 350px;
     }
-    .majorList{
+    .majorList {
         max-width: 1024px;
     }
 }
 
-@media screen and (min-width: 1560px){
-    .toppicCarousel{
+@media screen and (min-width: 1560px) {
+    .toppicCarousel {
         margin-top: 2%;
         margin-left: 15%;
-        width:70%;
+        width: 70%;
         height: 350px;
     }
-    .toppic{
+    .toppic {
         width: 100%;
         max-height: 350px;
     }
