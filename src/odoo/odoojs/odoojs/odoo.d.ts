@@ -14,7 +14,7 @@ interface obj<T> {
     [index: string]: T
 }
 interface models extends obj<Array<string>> { }
-export interface Options {
+interface Options {
     host: string,
     db: string,
     modules?: modules,
@@ -107,10 +107,10 @@ export class cls {
     attr(attr: string): any | cls
 
 }
+export interface clsIns extends cls { }
 
 
-
-interface clsStatic {
+export interface clsStatic {
     _name: string
     _rpc: rpc
     _env: Array<clsStatic>
@@ -159,4 +159,5 @@ export class rpc {
     logout(): data
     call(params: callParams): data
 }
+export interface rpcIns extends rpc { }
 
