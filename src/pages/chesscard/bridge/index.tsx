@@ -1,19 +1,61 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import router from 'umi/router';
 import { Card, Row, Col, Spin } from 'antd';
 import styles from './index.less';
 import Odoo from '@/odoo';
 import { PopData } from '@/utils';
 import { connect } from 'dva'
-class Bridge extends PureComponent {
-    state = {
+//组件props和state接口
+interface login {
+    sid: String
+}
+export interface DvaLocation extends Location {
+    state: any,
+}
+export interface BridgeProps extends React.Props<any> {
+    history?: History;
+    location?: DvaLocation;
+    login: login;
+}
+export interface BridgeState {
+    dataSource: Array<userData>,
+    doing_game_ids: Array<doing_table_ids>,
+    loading: boolean,
+}
+
+//后台数据接口
+export interface _id {
+    id: number,
+    name: string,
+    user?: boolean,
+}
+export interface doing_table_ids extends _id {
+    game_id: _id
+    number?: number,
+    match_id: _id,
+    room_type: string,
+    round_id: _id,
+    date_from: string,
+    date_thru: string,
+    state: string,
+}
+export interface userData extends _id {
+    team_player_ids: Array<number>,
+    todo_table_ids: Array<number>,
+    done_table_ids: Array<number>,
+    doing_table_ids: doing_table_ids,
+}
+
+class Bridge extends PureComponent<BridgeProps, BridgeState> {
+    state: BridgeState = {
         dataSource: [],
         doing_game_ids: [],
         loading: true,
     }
     aaa = (data) => {
         console.log(data);
+
         router.push({
             pathname: '/chesscard/bridge/gameList',
             state: {
@@ -47,7 +89,7 @@ class Bridge extends PureComponent {
                 state: null,
             },
         }
-        const damain = [['id', '>=', '0']];
+        const damain: Array<Array<string>> = [['id', '>=', '0']];
 
         const clss = await Odoo.user(userFields);
         let doing_game_ids, dataSource, userdata
@@ -72,22 +114,20 @@ class Bridge extends PureComponent {
         console.log(dataSource);
         const style = {
             border: "2px solid red"
-        }
+        };
         return (
             <Spin spinning={loading} >
                 <div className="gutter-example" style={{ width: '100%', height: '100%' }}>
                     <Row gutter={16}>
                         {dataSource.map((item, index) => {
-                            console.log(item);
                             return (
                                 <Col
                                     key={item.name}
                                     className={styles.gutterRow}
                                     xs={24} sm={24} md={4} lg={4} xl={4}
                                     onClick={this.aaa.bind(this, item)}
-                                    style={item.user ? style : null}
-                                >
-                                    <Card title={item.id}>{item.name}</Card>
+                                    style={item.user ? style : null}>
+                                    <Card title={item.id}> {item.name} </Card>
                                 </Col>
                             )
                         })

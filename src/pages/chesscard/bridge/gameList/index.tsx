@@ -6,13 +6,42 @@ import { Pagination, Spin } from 'antd';
 import Odoo from '@/odoo'
 import { connect } from 'dva';
 import { PopData } from '@/utils';
-import { async } from 'q';
-class GameList extends PureComponent {
-    state = {
+import { BridgeProps, doing_table_ids, _id } from '..';
+//props,和state
+interface DvaLocation extends Location {
+    state: {
+        game_id: number
+        doing_table_ids: Array<doing_table_ids>
+    },
+}
+interface GameListProps extends BridgeProps {
+    location?: DvaLocation;
+}
+interface GameListState {
+    dataSource: Array<doing_table_ids>,
+    loading: boolean,
+    total: number,
+    doing_table_id: doing_table_ids,
+    round_id: _id
+}
+
+
+class GameList extends PureComponent<GameListProps, GameListState> {
+    state: GameListState = {
         dataSource: [],
         loading: true,
         total: 0,
         doing_table_id: undefined,
+        round_id: undefined,
+    }
+    static getDerivedStateFromProps(props, state) {
+        const { location: { state: { doing_table_ids } } } = props;
+        if (doing_table_ids.length > 0) {
+            return { ...state, round_id: doing_table_ids[0].round_id.id }
+        } else {
+            return { ...state }
+        }
+
     }
     componentDidMount() {
         const { location: { state } } = this.props;
@@ -46,7 +75,7 @@ class GameList extends PureComponent {
             date_thru: null,
             state: null,
         }
-        let offset, limit
+        let offset:number, limit:number
         //将用户的桌子放在第一个页显示，所有的数据桌子都要向后推移，故作此判断。
         if (page === 1) {
             limit = pageSize - doing_table_ids.length;
@@ -89,7 +118,7 @@ class GameList extends PureComponent {
             trueData.forEach(item => {
                 item.user = true
             })
-            console.log(trueData,doing_table_ids);
+            console.log(trueData, doing_table_ids);
             if (doing_table_ids.length === 0) {
                 dataSource = [...trueData, ...dataSource]
             } else {
