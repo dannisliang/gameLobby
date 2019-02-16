@@ -31,5 +31,4 @@ const models = {
     'og.board': ["name", "table_id", "match_id", "host_id", "guest_id", "round_id", "phase_id", "game_id", "deal_id", "number", "sequence", "dealer", "vulnerable", "card_str", "hands", "call_ids", "auction", "declarer", "contract", "openlead", "result", "ns_point", "ew_point", "ns_win", "ew_win", "card_ids", "tricks", "last_trick", "current_trick", "state", "player", "claimer", "claim_result", "host_imp", "guest_imp"],
 }
 const odoo = new Odoo({ host,db, modules, models });
-const s=odoo.env('s')
 export default odoo
