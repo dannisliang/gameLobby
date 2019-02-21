@@ -5,7 +5,7 @@ import router from 'umi/router';
 import { Pagination, Spin } from 'antd';
 import Odoo from '@/odoo'
 import { connect } from 'dva';
-import { PopData } from '@/utils';
+import { PopData, turnData } from '@/utils';
 import { BridgeProps, doing_table_ids, _id } from '..';
 //props,和state
 interface DvaLocation extends Location {
@@ -20,9 +20,11 @@ interface GameListProps extends BridgeProps {
 interface GameListState {
     dataSource: Array<doing_table_ids>,
     loading: boolean,
-    total: number,
+    totalIds: Array<number>,
     doing_table_id: doing_table_ids,
-    round_id: _id
+    round_id: _id,
+    dataCache: {},
+    domain: Array<any>
 }
 
 
@@ -30,19 +32,22 @@ class GameList extends PureComponent<GameListProps, GameListState> {
     state: GameListState = {
         dataSource: [],
         loading: true,
-        total: 0,
+        totalIds: [],
         doing_table_id: undefined,
         round_id: undefined,
+        dataCache: {},
+        domain: []
     }
     static getDerivedStateFromProps(props, state) {
-        const { location: { state: { doing_table_ids } } } = props;
+        const { location: { state: { doing_table_ids, game_id } } } = props;
         if (doing_table_ids.length > 0) {
-            return { ...state, round_id: doing_table_ids[0].round_id.id }
+            return { ...state, round_id: doing_table_ids[0].round_id.id, domain: [['game_id', '=', game_id,]] }
         } else {
-            return { ...state }
+            return { ...state, domain: [['game_id', '=', game_id,]] }
         }
 
     }
+
     componentDidMount() {
         const { location: { state } } = this.props;
         if (!state) {
@@ -52,12 +57,38 @@ class GameList extends PureComponent<GameListProps, GameListState> {
             this.getData()
         }
     }
+    
     getTotal = async () => {
         const { location: { state: { game_id } } } = this.props;
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,]];
-        const count = await cls.search_count(domain);
-        await this.setState({ total: count })
+        const ids = await cls.search_read(domain, {}, { order: 'id' });
+        await this.setState({ totalIds: turnData(ids) })
+    }
+    changeDomain=()=>{
+        
+    }
+    /**
+     * 获取数据时的起始id
+     */
+    getKwargs = (page, pageSize) => {
+        let offset: number, limit: number;
+        const { location: { state: { doing_table_ids } } } = this.props;
+        const doingLength: number = doing_table_ids.length
+        const { dataSource } = this.state
+        if (page === 1) {
+            limit = pageSize - doingLength;
+        } else {
+            offset = dataSource[dataSource.length - 1].id - 1
+            limit = pageSize;
+        }
+        return { offset, limit }
+    }
+    getDoing_table_ids = () => {
+        const { location: { state: { game_id, doing_table_ids } } } = this.props;
+        let trueData = []
+        const ids = doing_table_ids.map((item) => item.id);
+
     }
     getData = async (page = 1, pageSize = 8) => {
         const { location: { state: { game_id, doing_table_ids } } } = this.props;
@@ -75,14 +106,9 @@ class GameList extends PureComponent<GameListProps, GameListState> {
             date_thru: null,
             state: null,
         }
-        let offset:number, limit:number
         //将用户的桌子放在第一个页显示，所有的数据桌子都要向后推移，故作此判断。
-        if (page === 1) {
-            limit = pageSize - doing_table_ids.length;
-        } else {
-            offset = this.state.dataSource[this.state.dataSource.length - 1].id
-            limit = pageSize;
-        }
+        const { offset, limit } = this.getKwargs(page, pageSize)
+        console.log(page, offset, limit);
         let dataSource = await cls.search_read(domain, fields, { offset, limit, order: 'id' });
         if (doing_table_ids.length === 0) {
             const fields1 = {
@@ -102,7 +128,7 @@ class GameList extends PureComponent<GameListProps, GameListState> {
             const data = await cls.search_read(domain, fields1) || [];
             trueData = data.filter((item) => {
                 if (item.state !== 'done' && item.state !== 'cancel' && item.state !== 'close') {
-                    const play = item.player_ids.map((item) => item.name);
+                    const play: Array<string> = item.player_ids.map((item) => item.name);
                     if (play.indexOf(localStorage.userName) > -1) {
                         return true
                     }
@@ -177,11 +203,12 @@ class GameList extends PureComponent<GameListProps, GameListState> {
         }
     }
     render() {
-        const { dataSource, loading, total, doing_table_id } = this.state;
+        const { dataSource, loading, totalIds, doing_table_id } = this.state;
+        const total = totalIds.length
         // const url="http://192.168.1.131:3000/search?"+'sid='+localStorage.getItem('sid')+'&uid='+localStorage.getItem('uid')
         const url = '/igame/#/game/' + Number(doing_table_id);
         // const url='https://www.baidu.com/'
-        console.log(dataSource);
+        console.log(this.state);
         return (
             <Spin spinning={loading}>
                 <TableCard
