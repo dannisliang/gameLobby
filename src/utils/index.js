@@ -72,3 +72,20 @@ export function deepCopy(obj) {
     }
     return copy
 }
+
+export function deleteArrayInArry(array = [], element,instead) {
+    if (!Array.isArray(element)) {
+        const index = array.indexOf(element);
+        if (index > -1) {
+            array.splice(index, 1,instead)
+        }
+    } else {
+        element.forEach((value, index) => {
+            const indexs = array.indexOf(value);
+            if (indexs > -1) {
+                array.splice(indexs, 1,instead[index])
+            }
+        })
+    }
+    return array
+}

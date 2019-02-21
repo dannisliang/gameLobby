@@ -5,7 +5,7 @@ import router from 'umi/router';
 import { Pagination, Spin } from 'antd';
 import Odoo from '@/odoo'
 import { connect } from 'dva';
-import { PopData, turnData } from '@/utils';
+import { PopData, turnData, deleteArrayInArry } from '@/utils';
 import { BridgeProps, doing_table_ids, _id } from '..';
 //props,和state
 interface DvaLocation extends Location {
@@ -53,36 +53,34 @@ class GameList extends PureComponent<GameListProps, GameListState> {
         if (!state) {
             router.replace('/chesscard/bridge');
         } else if (this.props.login.sid && localStorage.sid) {
-            this.getTotal()
-            this.getData()
+            const result = this.getTotal()
+            result.then(() => {
+                this.getData()
+            })
+
         }
     }
-    
+
     getTotal = async () => {
-        const { location: { state: { game_id } } } = this.props;
+        const { location: { state: { game_id, doing_table_ids } } } = this.props;
         const cls = Odoo.env('og.table');
         const domain = [['game_id', '=', game_id,]];
+        const doing_ids = doing_table_ids.map((item) => item.id);
         const ids = await cls.search_read(domain, {}, { order: 'id' });
-        await this.setState({ totalIds: turnData(ids) })
+        await this.setState({ totalIds: deleteArrayInArry(turnData(ids), doing_ids, '') })
     }
-    changeDomain=()=>{
-        
+    changeDomain = () => {
+
     }
     /**
      * 获取数据时的起始id
      */
-    getKwargs = (page, pageSize) => {
-        let offset: number, limit: number;
-        const { location: { state: { doing_table_ids } } } = this.props;
-        const doingLength: number = doing_table_ids.length
-        const { dataSource } = this.state
-        if (page === 1) {
-            limit = pageSize - doingLength;
-        } else {
-            offset = dataSource[dataSource.length - 1].id - 1
-            limit = pageSize;
-        }
-        return { offset, limit }
+    getIds = async (page = 1, pageSize = 8) => {
+        const start = (page - 1) * pageSize
+        const end = pageSize * page
+        const { totalIds } = this.state
+        console.log(totalIds);
+        return totalIds.slice(start, end).filter((item) => item)
     }
     getDoing_table_ids = () => {
         const { location: { state: { game_id, doing_table_ids } } } = this.props;
@@ -96,7 +94,6 @@ class GameList extends PureComponent<GameListProps, GameListState> {
         const ids = doing_table_ids.map((item) => item.id);
         this.setState({ loading: true });
         const cls = Odoo.env('og.table');
-        const domain = [['game_id', '=', game_id,], ['id', 'not in', ids]];
         const fields = {
             number: null,
             match_id: null,
@@ -106,51 +103,14 @@ class GameList extends PureComponent<GameListProps, GameListState> {
             date_thru: null,
             state: null,
         }
-        //将用户的桌子放在第一个页显示，所有的数据桌子都要向后推移，故作此判断。
-        const { offset, limit } = this.getKwargs(page, pageSize)
-        console.log(page, offset, limit);
-        let dataSource = await cls.search_read(domain, fields, { offset, limit, order: 'id' });
-        if (doing_table_ids.length === 0) {
-            const fields1 = {
-                number: null,
-                match_id: null,
-                room_type: null,
-                round_id: null,
-                date_from: null,
-                date_thru: null,
-                state: null,
-                player_ids: {
-                    name: null
-                }
-            }
-            const cls = Odoo.env('og.table');
-            const domain = [['game_id', '=', game_id,],];
-            const data = await cls.search_read(domain, fields1) || [];
-            trueData = data.filter((item) => {
-                if (item.state !== 'done' && item.state !== 'cancel' && item.state !== 'close') {
-                    const play: Array<string> = item.player_ids.map((item) => item.name);
-                    if (play.indexOf(localStorage.userName) > -1) {
-                        return true
-                    }
-                } else {
-                    return false
-                }
-            })
-        }
+        const pageIds = await this.getIds(page, pageSize)
+        console.log(pageIds)
+        let dataSource = await cls.read(pageIds, fields);
         if (page === 1) {
             doing_table_ids.forEach(item => {
                 item.user = true
             })
-            trueData.forEach(item => {
-                item.user = true
-            })
-            console.log(trueData, doing_table_ids);
-            if (doing_table_ids.length === 0) {
-                dataSource = [...trueData, ...dataSource]
-            } else {
-                dataSource = [...doing_table_ids, ...dataSource]
-            }
-
+            dataSource = [...doing_table_ids, ...dataSource]
         }
         try {
             this.setState({
