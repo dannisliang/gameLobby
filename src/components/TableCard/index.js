@@ -6,7 +6,11 @@ import styles from './index.css'
 const TableCard = (props) => {
     const { dataSource, size = 200, scale = 0.1, margin = 10, url, jump } = props;
     const style = {
-        border: "2px solid red"
+        border: "2px solid red",
+    }
+    const minHeight = window.screen.availWidth
+    const width = {
+        width: minHeight / 4 <= 270 ? 270 : minHeight / 4
     }
     const title = (item) => (
         <span>{item.round_id.name + item.number}
@@ -26,7 +30,7 @@ const TableCard = (props) => {
         </a>
     )
     return (
-        <div className="gutter-example">
+        <div className={styles.gutterExample}>
 
             <Row
                 gutter={16}
@@ -40,6 +44,7 @@ const TableCard = (props) => {
                             className={styles.gutterRow}
                             xs={24} sm={12} md={8} xl={6}
                             style={item.user === true ? style : null}
+                            // style={width}
                         >
                             <Card
                                 title={title(item)}

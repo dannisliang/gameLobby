@@ -4,6 +4,7 @@ import SideMenu from '@/components/sideMenu';
 import HeaderUser from './header';
 import router from 'umi/router';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import styles from './basicLayout.less';
 const { Content } = Layout;
 class BaseLayout extends React.PureComponent {
     state = {
@@ -28,7 +29,8 @@ class BaseLayout extends React.PureComponent {
                     {/* 内容 */}
 
                     <Content
-                        style={{ margin: '24px 16px', padding: 24, minHeight: minHeight * 0.78, }}>
+                        className={styles.bordera}
+                        style={{ minHeight: minHeight * 0.78, }}>
                         <ErrorBoundary errorMessage={'数据获取失败'}>
                             {this.props.children}
                         </ErrorBoundary>
