@@ -3,7 +3,8 @@
     height: 100%;
 }
 .tableCard{
-    background-color: rgb(161, 221, 240);
+    border-radius: 4%;
+    background-color: rgb(88, 213, 251);
     cursor: pointer;
 }
 .tableSplit{

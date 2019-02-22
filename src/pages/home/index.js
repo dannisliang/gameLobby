@@ -1,3 +1,6 @@
+/**
+ * title: 首页 - 智赛棋牌
+ */
 import React, { Component } from 'react';
 import { Menu, Carousel } from 'antd';
 import styles from './index.less';

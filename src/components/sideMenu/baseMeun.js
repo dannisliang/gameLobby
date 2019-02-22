@@ -9,7 +9,7 @@ class SideMenu extends React.Component {
 	constructor(props) {
 		super(props);
 		console.log(props);
-		const { route: { routes }, location: { pathname }, } = props
+		const { route: { routes }, location: { pathname }, } = props;
 		const config = {
 			'/home': "首页",
 			"/chesscard": "棋牌游戏",
@@ -20,7 +20,6 @@ class SideMenu extends React.Component {
 			"/mobile": "手机游戏",
 		}
 		const menuData = this.getMenuData(routes, config);
-		
 		console.log(pathname);
 		this.state = {
 			selectKey: pathname,
@@ -63,9 +62,9 @@ class SideMenu extends React.Component {
 		const { selectKey } = this.state;
 		const selectKeyArray = selectKey.split('/').filter(item => item);
 		if (selectKeyArray.length >= 2) {
-			 select = '/' + selectKeyArray[0] + '/' + selectKeyArray[1];
+			select = '/' + selectKeyArray[0] + '/' + selectKeyArray[1];
 		} else {
-			 select = selectKey;
+			select = selectKey;
 		}
 		return select
 	}
@@ -75,10 +74,11 @@ class SideMenu extends React.Component {
 				trigger={null}
 				collapsible
 				collapsed={this.props.collapsed}
+				style={this.props.isMobile ? { height: "100vh" } : {}}
 			>
 				<div className={styles.logo} id="logo">
 					<Link to="/">
-						<img src={require('@/assets/logo.png')} alt="logo" style={{}}/>
+						<img src={require('@/assets/logo.png')} alt="logo" style={{}} />
 						<h1>Ant Design Pro</h1>
 					</Link>
 				</div>
