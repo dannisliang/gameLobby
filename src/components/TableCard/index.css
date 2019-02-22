@@ -65,7 +65,7 @@
 
 @media screen and (min-width:100px) {
     .gutterRow {
-        min-width: 270px;
+        min-width: 300px;
         padding-bottom: 4px;
         cursor: pointer;
         border-radius: 4%;
@@ -86,7 +86,7 @@
 
 @media screen and (min-width: 992px) {
     .gutterRow {
-        min-width: 270px;
+        min-width: 300px;
         max-width: 350px;
         padding-bottom: 4px;
         cursor: pointer;

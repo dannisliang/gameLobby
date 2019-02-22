@@ -1,3 +1,6 @@
+/**
+ * title: 桥牌 - 智赛棋牌
+ */
 import React, { PureComponent } from 'react';
 import PropTypes, { number } from 'prop-types';
 import router from 'umi/router';

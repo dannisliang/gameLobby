@@ -14,7 +14,7 @@ const TableCard = (props) => {
     }
     const title = (item) => (
         <span>{item.round_id.name + item.number}
-            <span style={{ marginLeft: '5PX', fontSize: "12px" }}>
+            <span style={{ marginLeft: '3PX', fontSize: "12px" }}>
                 <Tag color={item.room_type === 'open' ? "#108ee9" : 'red'}>{item.room_type}</Tag>
             </span>
         </span>

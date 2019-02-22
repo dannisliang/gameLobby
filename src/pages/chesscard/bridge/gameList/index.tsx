@@ -1,3 +1,6 @@
+/**
+ * title: 游戏桌位 - 智赛棋牌
+ */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import TableCard from '@/components/TableCard';
@@ -39,7 +42,14 @@ class GameList extends PureComponent<GameListProps, GameListState> {
         domain: []
     }
     static getDerivedStateFromProps(props, state) {
-        const { location: { state: { doing_table_ids, game_id } } } = props;
+        if (props.location.state) {
+            var { location: { state: { doing_table_ids, game_id } } } = props;
+        } else {
+            router.replace('/chesscard/bridge')
+            return { ...state }
+        }
+
+
         if (doing_table_ids.length > 0) {
             return { ...state, round_id: doing_table_ids[0].round_id.id, domain: [['game_id', '=', game_id,]] }
         } else {
