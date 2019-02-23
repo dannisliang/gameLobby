@@ -1,3 +1,6 @@
+/**
+ * title: 智赛桥牌
+ */
 import React from 'react';
 import Redirect from 'umi/redirect';
 export default function BeginRouter(props) {

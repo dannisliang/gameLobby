@@ -1,8 +1,8 @@
 import UserTop from '@/components/UserTop';
 import PropTypes from 'prop-types';
 import { Layout, Icon } from 'antd';
-import styles from'./header.less';
- function HeaderUser(props) {
+import styles from './header.less';
+function HeaderUser(props) {
     return (
         <Layout.Header className={styles.header}>
             <Icon
@@ -14,12 +14,12 @@ import styles from'./header.less';
         </Layout.Header>
     )
 }
-HeaderUser.propTypes={
-    collapsed:PropTypes.bool,
-    toggle:PropTypes.func,
+HeaderUser.propTypes = {
+    collapsed: PropTypes.bool,
+    toggle: PropTypes.func,
 }
-HeaderUser.defaultProps={
-    collapsed:false,
-    toggle:()=>{},
+HeaderUser.defaultProps = {
+    collapsed: false,
+    toggle: () => { },
 }
 export default HeaderUser

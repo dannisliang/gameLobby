@@ -1,3 +1,6 @@
+/**
+ * title: 登陆 - 智赛桥牌
+ */
 import React, { Component } from 'react';
 import { Alert, message } from 'antd';
 import { Link } from 'dva/router';

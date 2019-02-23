@@ -7,11 +7,6 @@ import Link from 'umi/link';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import styles from './basicLayout.less';
 const { Content } = Layout;
-function itemRender(route, params, routes, paths) {
-    console.log(route, routes, paths, params);
-    const last = routes.indexOf(route) === routes.length - 1;
-    return last ? <span>{route.MenuName}</span> : <Link to={paths}>{route.MenuName}</Link>;
-}
 class BaseLayout extends React.PureComponent {
     state = {
         collapsed: false,
@@ -33,7 +28,7 @@ class BaseLayout extends React.PureComponent {
         //面包屑逻辑：面包屑item的配置，先由路由信息routes生成每个路由和其对应的title组成的对象breadcrumbNameMap。
         //再对当前的url进行解析，逐级分离路由，形成url信息
         //将上述信息对应，即可实现
-        const breadcrumbNameMapArray = routes.filter((item) => item.path && item.path != '' && item.path != "/" && item.path != "/login")
+        const breadcrumbNameMapArray = routes.filter((item) => item.path && item.path != '')
         const breadcrumbNameMap = breadcrumbNameMapArray.reduce((pre, now) => {
             pre[now.path] = now.title;
             return pre
@@ -41,6 +36,7 @@ class BaseLayout extends React.PureComponent {
         const pathSnippets = this.props.location.pathname.split('/').filter(i => i && i != 'itable');
         const extraBreadcrumbItems = pathSnippets.map((_, index) => {
             const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+            console.log(breadcrumbNameMap);
             return (
                 <Breadcrumb.Item key={url}>
                     <Link to={url}>
@@ -63,11 +59,11 @@ class BaseLayout extends React.PureComponent {
                         separator='>'
                     >
                         {BreadcrumbItem}
-                        <Divider
-                            style={{ color: "black", height: "1.5px", marginBottom: '0px', marginTop: "15px" }}
-                        />
-                    </Breadcrumb>
 
+                    </Breadcrumb>
+                    <Divider
+                        style={{ color: "black", height: "1.5px", marginBottom: '0px', marginTop: "15px" }}
+                    />
                     <Content
                         className={styles.bordera}
                         style={{ minHeight: minHeight * 0.78, }}>
