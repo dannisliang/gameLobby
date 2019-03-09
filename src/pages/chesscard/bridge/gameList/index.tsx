@@ -1,7 +1,7 @@
 /**
  * title: 游戏桌位 - 智赛棋牌
  */
-import React, { PureComponent } from 'react';
+import React, { PureComponent,useReducer } from 'react';
 import PropTypes from 'prop-types';
 import TableCard from '@/components/TableCard';
 import router from 'umi/router';
@@ -11,6 +11,7 @@ import { connect } from 'dva';
 import { PopData, turnData, ChangeIndexArrayInArry } from '@/utils';
 import { BridgeProps, doing_table_ids, _id } from '..';
 import Search from './search';
+import { close } from 'fs';
 //props,和state
 interface DvaLocation extends Location {
     state: {
@@ -88,11 +89,10 @@ class GameList extends PureComponent<GameListProps, GameListState> {
     }
     changeData = (domain) => {
         console.log(domain)
-        const { pageConfig: { page, pageSize } } = this.state
         this.setState({ loading: true })
         const result = this.getTotal(domain)
         result.then(() => {
-            this.getData(page, pageSize)
+            this.getData()
         })
     }
     /**
@@ -131,10 +131,6 @@ class GameList extends PureComponent<GameListProps, GameListState> {
         this.setState({
             dataSource: dataSource,
             loading: false,
-            pageConfig: {
-                page: page,
-                pageSize: pageSize
-            }
         })
     }
     test = async () => {

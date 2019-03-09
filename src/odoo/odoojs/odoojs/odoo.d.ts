@@ -36,17 +36,21 @@ interface errCallback {
 
 }
 interface loginParams {
-     /**
-     * 数据库名称
-     */
+    /**
+    * 数据库名称
+    */
     db?: string,
-     /**
-     * 登陆名称
-     */
+    /**
+    * 登陆名称
+    */
     login: string,
-     /**
-     * 登陆密码
-     */
+    /**
+    * 角色设置
+    */
+    role: "administrator" | "sponsor" | "referee" | "player",
+    /**
+    * 登陆密码
+    */
     password: string
 }
 type dataSource = Array<any>
@@ -80,6 +84,10 @@ export default class Odoo {
      * 所有模型
      */
     _models: models
+    /**
+     * 验证函数
+     */
+    me(fields: fields): cls
     /**
      * 所有模型的cls类
      */
@@ -139,10 +147,10 @@ export default class Odoo {
 }
 interface OdooStatic {
     _session: {}
-      /**
-     * 返回某个用户模型
-     * @param session_id 
-     */
+    /**
+   * 返回某个用户模型
+   * @param session_id 
+   */
     load(session_id: string): Odoo
 }
 export class cls {

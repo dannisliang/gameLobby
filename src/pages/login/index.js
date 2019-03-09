@@ -30,7 +30,7 @@ class UserBlock extends Component {
         }
         const { dispatch } = this.props
         const { account, password } = values;
-        const sid = await odoo.login({ login: account, password: password });
+        const sid = await odoo.login({ login: account, password: password ,role:"player"});
         if (sid) {
             console.log(sid);
             dispatch({

@@ -1,9 +1,20 @@
+import { Breadcrumb } from 'antd'
+import Link from 'umi/link'
+/**
+ * 将id放在dataSource 最前面，已废弃
+ * @param {*} dataSource 
+ * @param {*} id 
+ */
 export function PopData(dataSource = [], id = []) {
     const newdata = [...dataSource]
     const flag = newdata.filter((item) => id.indexOf(item.id) >= 0).map((item) => (item.user = true) && item);
     const noflag = newdata.filter((item) => id.indexOf(item.id) < 0);
     return [...flag, ...noflag]
 }
+/**
+ * 将data中的某些对象转换为数组
+ * @param {*} data 
+ */
 export function turnData(data) {
     if (Array.isArray(data)) {
         data.forEach((item, index) => {
@@ -72,12 +83,17 @@ export function deepCopy(obj) {
     }
     return copy
 }
-
-export function ChangeIndexArrayInArry(array = [], element,instead) {
+/**
+ * 将数组中的某些元素提前
+ * @param {*} array 
+ * @param {*} element 
+ * @param {*} instead 
+ */
+export function ChangeIndexArrayInArry(array = [], element, instead) {
     if (!Array.isArray(element)) {
         const index = array.indexOf(element);
         if (index > -1) {
-            array.splice(index, 1,)
+            array.splice(index, 1)
             array.unshift(element)
         }
     } else {
@@ -90,4 +106,25 @@ export function ChangeIndexArrayInArry(array = [], element,instead) {
         })
     }
     return array
+}
+export function makeBreadcrumb(routes) {
+    const breadcrumbNameMapArray = routes.filter((item) => item.path && item.path != '')
+    const breadcrumbNameMap = breadcrumbNameMapArray.reduce((pre, now) => {
+        pre[now.path] = now.title;
+        return pre
+    }, {})
+    const pathSnippets = this.props.location.pathname.split('/').filter(i => i && i != 'itable');
+    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+        console.log(breadcrumbNameMap);
+        return (
+            <Breadcrumb.Item key={url}>
+                <Link to={url}>
+                    {breadcrumbNameMap[url].split(' ')[0]}
+                </Link>
+            </Breadcrumb.Item>
+        );
+    });
+    const BreadcrumbItem = [].concat(extraBreadcrumbItems);
+    return BreadcrumbItem
 }

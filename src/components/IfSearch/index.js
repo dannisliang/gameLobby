@@ -5,25 +5,35 @@ import router from 'umi/router';
 import { Pagination, Spin, Tag } from 'antd';
 import Odoo from '@/odoo'
 import { PopData, turnData, deleteArrayInArry } from '@/utils';
-import { useSeachData } from './searchHooks'
-
+import Title from 'antd/lib/skeleton/Avatar';
 
 const { CheckableTag } = Tag
+async function getRound(game_id) {
+    const cls = Odoo.env('og.phase');
+    const roundArray = await cls.search_read([['game_id', '=', game_id]], { name: null }); console.log(roundArray)
+    const round = Array.from(new Set(turnData(roundArray)));
+    return round
+}
 export default (props) => {
-    const { loading, changeData, game_id } = props;
-    const round = useSeachData('og.phase', [['game_id', '=', game_id]])
+    const { loading, changeData, game_id, conditionConfig } = props;
+    const [round, setRound] = useState([])
     const [check, setCheck] = useState(-1)
+    useEffect(() => {
+        getRound(game_id).then((value) => {
+            setRound(value)
+        })
+    }, [round])
     const updataData = (item, index) => {
         if (!loading) {
             setCheck(index);
-            const domain = [['game_id', '=', game_id], ['phase_id', '=', item.id]];
+            const domain = [['game_id', '=', game_id], ['phase_id', '=', item[0]]];
             changeData(domain);
         }
     }
     return (
         <>
             <div style={{ marginBottom: "12px" }}>
-                <span>赛段选择：</span>
+                <span>{conditionConfig.title}</span>
                 {round.map((item, index) => {
                     return (
                         <CheckableTag
@@ -31,7 +41,7 @@ export default (props) => {
                             checked={check === index ? true : false}
                             onChange={updataData.bind(this, item, index)}
                         >
-                            {item.name}
+                            {item[1]}
                         </CheckableTag>
                     )
                 })}
