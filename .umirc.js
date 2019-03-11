@@ -25,8 +25,9 @@ export default {
   publicPath: '/itable/',
   chainWebpack(config, { webpack }) {
     console.log(process.env.NODE_ENV);
+    console.log(process.argv.slice)
     let proxy = {}
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development" || process.argv.splice(2).indexOf('local') > -1) {
       proxy = {
         '/api': {
           target: 'http://192.168.1.88:8069/',
@@ -68,6 +69,9 @@ export default {
               extensions: ['', '.ts', '.tsx']
             }
           }
+        }),
+        new webpack.DefinePlugin({
+          local: JSON.stringify('local')
         })
       ]
     })
