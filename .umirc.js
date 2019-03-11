@@ -26,24 +26,24 @@ export default {
   chainWebpack(config, { webpack }) {
     console.log(process.env.NODE_ENV);
     console.log(process.argv)
-    let proxy = {}
-    if (process.env.NODE_ENV === "development" || process.argv.splice(2).indexOf('local') > -1) {
-      proxy = {
-        '/api': {
-          target: 'http://192.168.1.88:8069/',
-          changeOrigin: true,
-          pathRewrite: { '^/api': '' },
-        }
-      }
-    } else {
-      proxy = {
-        '/api': {
-          target: 'http://139.198.21.140:8069',
-          changeOrigin: true,
-          pathRewrite: { '^/api': '' },
-        }
-      }
-    }
+    // let proxy = {}
+    // if (process.env.NODE_ENV === "development" || process.argv.splice(2).indexOf('local') > -1) {
+    //   proxy = {
+    //     '/api': {
+    //       target: 'http://192.168.1.88:8069',
+    //       changeOrigin: true,
+    //       pathRewrite: { '^/api': '' },
+    //     }
+    //   }
+    // } else {
+    //   proxy = {
+    //     '/api': {
+    //       target: 'http://139.198.21.140:8069',
+    //       changeOrigin: true,
+    //       pathRewrite: { '^/api': '' },
+    //     }
+    //   }
+    // }
     config.merge({
       module: {
         rules: [
@@ -59,9 +59,9 @@ export default {
       resolve: {
         extensions: ['.tsx', '.ts', '.js']
       },
-      devServer: {
-        proxy: proxy,
-      },
+      // devServer: {
+      //   proxy: proxy,
+      // },
       plugins: [
         new webpack.LoaderOptionsPlugin({
           options: {
@@ -70,9 +70,9 @@ export default {
             }
           }
         }),
-        new webpack.DefinePlugin({
-          local: JSON.stringify('local')
-        })
+        // new webpack.DefinePlugin({
+        //   local: JSON.stringify('local')
+        // })
       ]
     })
   }
