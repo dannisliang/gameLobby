@@ -1,4 +1,5 @@
 var path = require('path')
+
 // ref: https://umijs.org/config/
 export default {
   plugins: [
@@ -23,7 +24,25 @@ export default {
   base: '/itable',
   publicPath: '/itable/',
   chainWebpack(config, { webpack }) {
-    // console.log(config);
+    console.log(process.env.NODE_ENV);
+    let proxy = {}
+    if (process.env.NODE_ENV === "development") {
+      proxy = {
+        '/api': {
+          target: 'http://192.168.1.88:8069/',
+          changeOrigin: true,
+          pathRewrite: { '^/api': '' },
+        }
+      }
+    } else {
+      proxy = {
+        '/api': {
+          target: 'http://139.198.21.140:8069',
+          changeOrigin: true,
+          pathRewrite: { '^/api': '' },
+        }
+      }
+    }
     config.merge({
       module: {
         rules: [
@@ -38,6 +57,9 @@ export default {
       },
       resolve: {
         extensions: ['.tsx', '.ts', '.js']
+      },
+      devServer: {
+        proxy: proxy,
       },
       plugins: [
         new webpack.LoaderOptionsPlugin({
