@@ -1,7 +1,7 @@
 /**
  * title: 游戏桌位 - 智赛棋牌
  */
-import React, { PureComponent,useReducer } from 'react';
+import React, { PureComponent, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import TableCard from '@/components/TableCard';
 import router from 'umi/router';
@@ -98,7 +98,7 @@ class GameList extends PureComponent<GameListProps, GameListState> {
     /**
      * 获取数据时的起始id
      */
-    getIds = async (page = 1, pageSize = 8, ) => {
+    getIds = (page = 1, pageSize = 8, ) => {
         const start = (page - 1) * pageSize
         const end = pageSize * page
         const { totalIds } = this.state
