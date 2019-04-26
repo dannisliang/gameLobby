@@ -398,6 +398,7 @@ const modelCreator = options => {
 
     const fields2 = await cls._get_fields2(fields0);
     const data0 = await cls.call('read2', [ids, fields2]);
+    console.log(ids,fields2,data0)
     const data = data0 ? data0 : [];
 
     if (typeof ids === 'object') {

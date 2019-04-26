@@ -36,7 +36,7 @@ export default {
             return { ...state, sid: sid }
         },
         logout(state, { payload }) {
-            window.localStorage.removeItem('sid')
+            window.localStorage.clear()
             return { ...state, sid: null }
         }
     }

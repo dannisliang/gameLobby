@@ -6,6 +6,7 @@ import Link from 'umi/link'
  * @param {*} id 
  */
 export function PopData(dataSource = [], id = []) {
+    console.log(id)
     const newdata = [...dataSource]
     const flag = newdata.filter((item) => id.indexOf(item.id) >= 0).map((item) => (item.user = true) && item);
     const noflag = newdata.filter((item) => id.indexOf(item.id) < 0);

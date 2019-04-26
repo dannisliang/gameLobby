@@ -1,10 +1,11 @@
 import React from 'react';
-import { Layout, Drawer } from 'antd';
+import { LocaleProvider } from 'antd';
 import { connect } from 'dva';
 import Media from 'react-media';
 import router from 'umi/router';
 import BaseLayout from './BasicLayout';
 import LoginLayout from './LoginLayout';
+import zh_CN from 'antd/lib/locale-provider/zh_CN'
 import odoo from '@/odoo'
 class LayoutConfig extends React.PureComponent {
 	state = {
@@ -42,7 +43,9 @@ const mapStateToProps = ({ login }) => {
 	}
 }
 export default connect(mapStateToProps)(props => (
-	<Media query="(max-width: 599px)">
-		{isMobile => <LayoutConfig {...props} isMobile={isMobile} />}
-	</Media>
+	<LocaleProvider locale={zh_CN}>
+		<Media query="(max-width: 599px)">
+			{isMobile => <LayoutConfig {...props} isMobile={isMobile} />}
+		</Media>
+	</LocaleProvider>
 ))

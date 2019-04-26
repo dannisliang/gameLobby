@@ -58,7 +58,7 @@ export default  {
         'og.table.player': {
             fields: [
                 "name", "table_id", "player_id", "partner_id",
-                "team_id", "position"
+                "team_id", "position","online"
             ]
         },
 

@@ -58,7 +58,7 @@ interface error {
     message?: string
 }
 interface callParams {
-    model: models,
+    model: string,
     methods: string,
     args: Array<any>,
     kwargs?: {}

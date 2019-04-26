@@ -2,13 +2,14 @@ import Odoo from './odoojs/odoojs/odoo';
 import zog_igame from './odoojs/odoo.addons.zog_igame';
 
 
-const host = 'http://192.168.1.88:8069'
+const host = 'http://192.168.1.20:8069'
 const db = 'TT'
 
 const { crm, project, product, analytic, account } = Odoo.addons;
 const modules = { zog_igame };
 const models = {
     'res.users': [
+        "partner_id",
         "team_player_ids",
         "todo_table_ids",
         "done_table_ids",
@@ -25,9 +26,9 @@ const models = {
     'og.team.round.info': ['name', 'number', 'sequence', 'round_id', 'team_id', 'game_id', 'phase_ids', 'match_team_id', 'opp_team_id', 'match_id', 'imp', 'imp_opp', 'vp', 'vp_opp', 'score_uom', 'score_manual', 'score', 'score_open', 'score_close', 'rank_open', 'rank_close'],
     'og.match': ["name", "number", "round_id", "phase_id", "game_id", "deal_ids", "date_from", "date_thru", "host_id", "guest_id", "match_team_ids", "line_ids", "open_table_id", "close_table_id", "table_ids", "deal_count", "imp", "imp_manual", "host_imp", "guest_imp", "vp", "vp_manual", "host_vp", "guest_vp",],
     'og.match.team': ["name", "match_id", "team_id", "opp_team_id", "position", "imp", "imp_opp", "vp", "vp_opp"],
-    'og.match.line': ["name", "match_id", "deal_id", "host_id", "guest_id", "open_table_id", "close_table_id", "open_board_id", "close_board_id", "number", "open_declarer", "open_contract", "open_result", "open_ns_point", "open_ew_point", "close_declarer", "close_contract", "close_result", "close_ns_point", "close_ew_point", "point", "host_point", "guest_point", "imp", "host_imp", "guest_imp"],
-    'og.table': ["name", "number", "room_type", "match_id", "round_id", "schedule_id", "schedule_number", "phase_id", "game_id", "deal_ids", "date_from", "date_thru", "ns_team_id", "ew_team_id", "west_id", "north_id", "east_id", "south_id", "player_ids", "table_player_ids", "board_ids", "doing_board_id", "state"],
-    'og.table.player': ["name", "table_id", "player_id", "team_id", "position"],
+    'og.match.line': ["name", "match_id", "deal_id", "host_id", "guest_id", "open_table_id", "close_table_id", "open_board_id", "close_board_id", "number", "open_declarer", "open_contract", "open_result", "open_ns_point", "open_ew_point", "close_declarer", "close_contract", "close_result", "close_ns_point", "close_ew_point", "point", "host_point", "guest_point", "imp", "host_imp", "guest_imp",],
+    'og.table': ["name", "table_player_ids","number", "room_type", "match_id", "round_id", "schedule_id", "schedule_number", "phase_id", "game_id", "deal_ids", "date_from", "date_thru", "ns_team_id", "ew_team_id", "west_id", "north_id", "east_id", "south_id", "player_ids", "board_ids", "doing_board_id", "state"],
+    'og.table.player': ["name", "table_id", "player_id", "team_id", "position","online"],
     'og.board': ["name", "table_id", "match_id", "host_id", "guest_id", "round_id", "phase_id", "game_id", "deal_id", "number", "sequence", "dealer", "vulnerable", "card_str", "hands", "call_ids", "auction", "declarer", "contract", "openlead", "result", "ns_point", "ew_point", "ns_win", "ew_win", "card_ids", "tricks", "last_trick", "current_trick", "state", "player", "claimer", "claim_result", "host_imp", "guest_imp"],
 }
 const odoo = new Odoo({ host,db, modules, models });

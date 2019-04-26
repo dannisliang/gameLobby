@@ -25,6 +25,8 @@ export interface BridgeState {
     dataSource: Array<userData>,
     doing_game_ids: Array<doing_table_ids>,
     loading: boolean,
+    userData: any,
+    team_ids: Array<any>,
 }
 
 //后台数据接口
@@ -55,15 +57,18 @@ class Bridge extends PureComponent<BridgeProps, BridgeState> {
         dataSource: [],
         doing_game_ids: [],
         loading: true,
+        userData: [],
+        team_ids: [],
     }
     aaa = (data) => {
         console.log(data);
 
         router.push({
-            pathname: '/chesscard/bridge/gameList',
+            pathname: '/chesscard/bridge/roundList',
             state: {
                 game_id: data.id,
-                doing_table_ids: this.state.doing_game_ids.filter((item) => item.game_id.id === data.id),//只传递属于该game的doing_table_ids
+                userData: this.state.userData,
+                team_ids: this.state.team_ids.filter(item => item.game_id.id === data.id)
             }
         })
     }
@@ -72,12 +77,24 @@ class Bridge extends PureComponent<BridgeProps, BridgeState> {
             this.getGameData()
         }
     }
+    getUserGame = async (team_player_ids = []) => {
+        const cls = Odoo.env("og.team")
+        const domain = [['player_ids', 'in', team_player_ids.map(item => Number(item))]]
+        const fields = {
+            game_id: null
+        }
+        const data = await cls.search_read(domain, fields)
+        console.log(data)
+        return data
+
+    }
     getGameData = async () => {
         const game = Odoo.env('og.game');
         const fields = {
             name: null
         }
         const userFields = {
+            "partner_id": null,
             "team_player_ids": null,
             "todo_table_ids": null,
             "done_table_ids": null,
@@ -98,14 +115,20 @@ class Bridge extends PureComponent<BridgeProps, BridgeState> {
         let doing_game_ids, dataSource, userdata
         try {
             userdata = clss.look(userFields);
-            console.log(userdata);
-            doing_game_ids = userdata.doing_table_ids.map((item) => item.game_id.id);
-            dataSource = await game.search_read(damain, fields);
-            this.setState({
-                dataSource: PopData(dataSource, doing_game_ids),
-                doing_game_ids: userdata.doing_table_ids.filter((item) => item.state !== 'done'),
-                loading: false,
-            });
+            localStorage.partner_id = userdata.partner_id.id
+            // 通过team_plasyer_ids获取game_id，
+            this.getUserGame(userdata.team_player_ids).then(async (val) => {
+                doing_game_ids = val.map(item => item.game_id.id)
+                dataSource = await game.search_read(damain, fields);
+                this.setState({
+                    dataSource: PopData(dataSource, doing_game_ids),
+                    doing_game_ids: userdata.doing_table_ids.filter((item) => item.state !== 'done'),
+                    userData: userdata,
+                    team_ids: val,
+                    loading: false,
+                });
+            })
+
         } catch (err) {
             alert('sid超期')
             // router.push('/login')
@@ -118,6 +141,7 @@ class Bridge extends PureComponent<BridgeProps, BridgeState> {
         const style = {
             border: "2px solid red"
         };
+
         return (
             <Spin spinning={loading} >
                 <div className="gutter-example" style={{ width: '100%', height: '100%' }}>

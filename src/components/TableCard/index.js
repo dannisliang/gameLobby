@@ -4,7 +4,7 @@ import TableCell from './tableCell.js';
 import { Card, Row, Col, Tag } from 'antd';
 import styles from './index.css'
 const TableCard = (props) => {
-    const { dataSource, size = 200, scale = 0.1, margin = 10, url, jump } = props;
+    const { dataSource, size = 200, scale = 0.3, margin = 20, title, extra, render } = props;
     const style = {
         border: "2px solid red",
     }
@@ -12,23 +12,6 @@ const TableCard = (props) => {
     const width = {
         width: minHeight / 4 <= 270 ? 270 : minHeight / 4
     }
-    const title = (item) => (
-        <span>{item.round_id.name + item.number}
-            <span style={{ marginLeft: '3PX', fontSize: "12px" }}>
-                <Tag color={item.room_type === 'open' ? "#108ee9" : 'red'}>{item.room_type}</Tag>
-            </span>
-        </span>
-    )
-    const extra = (item) => (
-        <a
-            target="_blank"
-            rel="noopener norefferrer"
-            onClick={jump.bind(this, item)}
-            href={url}
-        >
-            {item.user ? '进入游戏' : ''}
-        </a>
-    )
     return (
         <div className={styles.gutterExample}>
 
@@ -44,18 +27,19 @@ const TableCard = (props) => {
                             className={styles.gutterRow}
                             xs={24} sm={12} md={8} xl={6}
                             style={item.user === true ? style : null}
-                            // style={width}
+                        // style={width}
                         >
                             <Card
-                                title={title(item)}
+                                title={typeof title === "string" ? title : title(item)}
                                 headStyle={{ fontSize: '19px' }}
-                                extra={extra(item)}
+                                extra={typeof extra === "string" ? extra : extra(item)}
                             >
                                 <div className={index.tableBack}>
                                     <TableCell
                                         tableData={item}
                                         size={size}
                                         scale={scale}
+                                        render={render}
                                         margin={margin}
                                         type={"open"}>
                                     </TableCell>

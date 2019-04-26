@@ -10,7 +10,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/assets/*": ["src/assets/*"]
     },
     "allowSyntheticDefaultImports": true
   }

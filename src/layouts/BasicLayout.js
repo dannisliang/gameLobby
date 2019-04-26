@@ -36,7 +36,6 @@ class BaseLayout extends React.PureComponent {
         const pathSnippets = this.props.location.pathname.split('/').filter(i => i && i != 'itable');
         const extraBreadcrumbItems = pathSnippets.map((_, index) => {
             const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-            console.log(breadcrumbNameMap);
             return (
                 <Breadcrumb.Item key={url}>
                     <Link to={url}>
@@ -73,7 +72,6 @@ class BaseLayout extends React.PureComponent {
                         </ErrorBoundary>
                     </Content>
                 </Layout>
-
             </Layout>
         );
     }

@@ -28,6 +28,7 @@ class UserBlock extends Component {
         if (err) {
             return
         }
+        const cls = odoo.env('res.user')
         const { dispatch } = this.props
         const { account, password } = values;
         const sid = await odoo.login({ login: account, password: password ,role:"player"});
